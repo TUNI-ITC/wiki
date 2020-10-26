@@ -1,17 +1,12 @@
-# Welcome to MkDocs
+# Welcome
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to Wiki Pages of Information Technology and Communication Sciences.
 
-## Commands
+This wiki is meant to be tool for personnels of our department, supporting research and teaching needs. You (yes you!) can contribute content to this wiki and help us building the common crowdsourced knowledge database (see [How to contribute](https://tuni-itc.github.io/wiki/)).
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Technical Notes
+- [How to set up Remote Access](how-to-set-up-remote-access.md)
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Links
+- [Computer Vision Group](https://research.tuni.fi/vision/)
+- [Tampere University](https://www.tuni.fi/en)
