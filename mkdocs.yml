@@ -4,7 +4,12 @@ theme:
     name:
         material
     palette:
-        primary: deep purple
+        primary:
+            deep purple
+    logo:
+        assets/logo.png
+    favicon:
+        assets/favicon.ico
 
 markdown_extensions:
   - admonition

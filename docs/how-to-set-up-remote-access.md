@@ -19,14 +19,14 @@ The host machine will be reachable using a University-maintained laptop using Un
 * 👍  Stable. The IP of the host machine will not change after reconnection and the connection is lost rarely as it uses the wired connection.
 * 👍  Fast. The machine is using a Gigabit connection from the wall socket.
 
-- 💩  You will need to contact [IT-Helpdesk](it-helpdesk@tuni.fi). This might take some time.
+- 💩  You will need to contact `it-helpdesk@tuni.fi`. This might take some time.
 - 💩  `ssh-forward.cc.tut.fi` doesn't support key-pair authentication. You can only login with passwords.
 - 💩  Different log-in procedure depending on the network you are using. One-step on `roam.fi/eduroam/TUNI-STAFF`, two-step on other networks.
 - 💩/👍  `ssh-forward.cc.tut.fi` has very limited disk space for each user (few MB). Therefore, can only be used as a proxy for your `ssh` connection *which is its main purpose*.
 
 ### How to set up
-1. Email [IT-Helpdesk](it-helpdesk@tuni.fi) to connect your office machine to `pit.cs.tut.fi` network. Specify the following things: a) the inventory number of the machine (on the sticker), b) MAC address of the socket in the machine you would like to use for the wired connection to the internet (you may have several Ethernet ports--you need only one), c) mention the Ethernet socket number from the wall that you will use. They will assign a fixed IP/FQDN and you will not need to type your credentials every 24 hours to have the internet connection.
-2. At this point, you should have had received the response from [IT-Helpdesk](it-helpdesk@tuni.fi) and be able to connect to the internet using the socket you specified. If so, check your IP and type `host your_IP` to find out the FQDN. It should be something like `IP_reversed pointed to **********.pit.cs.tut.fi`.
+1. Email `it-helpdesk@tuni.fi` to connect your office machine to `pit.cs.tut.fi` network. Specify the following things: a) the inventory number of the machine (on the sticker), b) MAC address of the socket in the machine you would like to use for the wired connection to the internet (you may have several Ethernet ports--you need only one), c) mention the Ethernet socket number from the wall that you will use. They will assign a fixed IP/FQDN and you will not need to type your credentials every 24 hours to have the internet connection.
+2. At this point, you should have had received the response from `it-helpdesk@tuni.fi` and be able to connect to the internet using the socket you specified. If so, check your IP and type `host your_IP` to find out the FQDN. It should be something like `IP_reversed pointed to **********.pit.cs.tut.fi`.
 3. Install `openssh-server` on your machine (host). This will allow `ssh` connection to this machine.
 4. Next, make sure no WiFi connection connects automatically after the startup. Type `sudo nm-connection-editor` in terminal (or just go to `Edit connection` from the status menu on 16.04). Click on saved connections and go to `Preferences` (setting icon at the bottom) > `General` > uncheck the box.
 5. Allow your `Wired connection` to automatically connect when available. `sudo nm-connection-editor`, go to `General` tab and make sure the box is checked.
