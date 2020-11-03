@@ -2,11 +2,11 @@
 
 Welcome to Wiki Pages of Information Technology and Communication Sciences at Tampere University.
 
-This wiki is meant to be a tool for personnels of our department, supporting research and teaching needs. You (yes you!) can contribute content to this wiki and help us building the common crowdsourced knowledge database (see [How to contribute](https://github.com/TUNI-ITC/wiki#how-to-contribute)).
+This wiki is meant to be a tool for personnels of our department, supporting research and teaching needs. You (yes you!) can contribute content to this wiki and help us building the common crowdsourced knowledge database (see [How to contribute on GitHub](https://github.com/TUNI-ITC/wiki#how-to-contribute)).
 
 ## Technical Notes
-- [How to set up Remote Access](how-to-set-up-remote-access.md)
-- [How to install TUNI VPN](install-tuni-vpn.md)
+- [How to set up Remote Access](tech-notes/how-to-set-up-remote-access.md)
+- [How to install TUNI VPN](tech-notes/install-tuni-vpn.md)
 
 
 ## Links

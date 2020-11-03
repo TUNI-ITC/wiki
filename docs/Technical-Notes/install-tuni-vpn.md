@@ -23,6 +23,3 @@ Start openvpn:
 And that's it - your internet connection goes over VPN and you have access to university computers!!
 
 **Note:** You need to update the VPN configuration files every now and then (the expriry date by default is in the filename, e.g., "Downloads/eduvpn.tuni.fi_internet_20201102_joni-laptop.ovpn#)
-
-
-
