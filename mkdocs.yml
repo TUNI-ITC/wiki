@@ -14,3 +14,4 @@ theme:
 markdown_extensions:
   - admonition
   - pymdownx.superfences
+  - pymdownx.details
