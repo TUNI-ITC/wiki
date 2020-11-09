@@ -4,6 +4,9 @@ Welcome to Wiki Pages of Information Technology and Communication Sciences at Ta
 
 This wiki is meant to be a tool for personnel of our department, supporting research and teaching needs. You (yes you!) can contribute content to this wiki and help us building the common crowdsourced knowledge database.
 
+## University Bureaucracy
+- [Work contracts](uni_bureaucracy/work_contracts.md)
+
 ## Technical Notes
 - [How to set up Remote Access](Technical-Notes/how-to-set-up-remote-access.md)
 - [How to install TUNI VPN](Technical-Notes/install-tuni-vpn.md)
