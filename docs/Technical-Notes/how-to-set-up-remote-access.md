@@ -47,9 +47,9 @@ The host machine will be reachable using a University-maintained laptop using Un
     Config the `ssh` connection in `~/.ssh/config`:
     ``` python
     Host connection_name
-    HostName ***********.pit.cs.tut.fi
-    User your_username_at_the_host_machine
-    ProxyCommand ssh your-tuni-username@ssh-forward.cc.tut.fi -W %h:%p
+      HostName ***********.pit.cs.tut.fi
+      User your_username_at_the_host_machine
+      ProxyCommand ssh your-tuni-username@ssh-forward.cc.tut.fi -W %h:%p
     ```
     After doing this, you will be able to do `ssh connection_name` to `ssh` directly to `*********.pit.cs.tut.fi`, forward ports, and transfer large files using `scp/rsync`. It is also useful if you are using `VSCode` or any other text editor which supports remote development. Additionally, it is handy if you would like to mount folders from the host to your client. You can use `sshfs connection_name:/path/to/remote_folder /path/to/local_folder`.
 
