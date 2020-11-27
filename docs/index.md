@@ -10,6 +10,7 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 ## Technical Notes
 - [How to set up Remote Access](Technical-Notes/how-to-set-up-remote-access.md)
 - [How to install TUNI VPN](Technical-Notes/install-tuni-vpn.md)
+- [TUNI Narvi Cluster](Technical-Notes/tuni-narvi-cluster.md)
 
 ## Meta
 - [How to contrubute to the Wiki](Meta/how-to-contribute.md)
