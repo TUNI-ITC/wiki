@@ -9,6 +9,9 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 - [How to install TUNI VPN](Technical-Notes/install-tuni-vpn.md)
 - [TUNI Narvi Cluster](Technical-Notes/tuni-narvi-cluster.md)
 
+## University Bureaucracy
+- [Contracts and salary](University-Bureaucracy/employee.md)
+
 ## Meta
 - [How to contrubute to the Wiki](Meta/how-to-contribute.md)
 
