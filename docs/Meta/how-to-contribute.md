@@ -15,6 +15,29 @@ There are two options on how to contribute to Wiki:
 
 ## Ok, What Should I Do?
 
+??? warning "I already have a fork"
+    If your fork is even with `TUNI-ITC/wiki` you are good to go! Otherwise, before starting another contribution, please make sure your fork is not behind the [TUNI-ITC/wiki](https://github.com/TUNI-ITC/wiki).
+
+    Of course, the easiest way to sync a fork (and the last resort measure if something went wrong) is to delete the fork from your GitHub account and fork [TUNI-ITC/wiki](https://github.com/TUNI-ITC/wiki) again but, as the downside, your followers will be notified that you made a fork. So, a less barbaric approach is to sync it. Here is how you can do it. To avoid issues, back up your folder, delete it from your machine, and clone the fork again.
+
+    ```bash
+    # pull the changes made on TUNI-ITC/wiki locally on your machine
+    git pull --rebase https://github.com/TUNI-ITC/wiki.git main
+    # push the differences to your GitHub fork such that they appear before yours if you had any
+    # (it is forceful – rewrites history of commits but it is safe unless somebody forked your fork)
+    git push --force-with-lease origin main
+    ```
+
+    At this point, your GitHub fork should be even with `TUNI-ITC/wiki` or be ahead by X commits.
+
+    If these X commits are not the ones you want to have on your fork and you would like to remove them (you will not be able to restore them!), do these:
+    ```bash
+    # where `X` is the number of commits you would like to remove from your fork
+    git reset --hard HEAD~X
+    # this is, again, forceful and rewrites history but it is ok if none relies on your fork.
+    git push --force origin main
+    ```
+
 The pipeline boils down to these several steps which should be familiar to anyone who worked with an open-source project on some sort of Hub 🤓 (GitHub, Bitbucket, GitLab, and such):
 
 0. Create an Issue _(skip if feeling lazy or playing like a bad boy)_
@@ -45,7 +68,7 @@ You may freely edit an existing file or create new, e.g., `how-to-select-a-coffe
 
 We are using [Material Theme](https://squidfunk.github.io/) for [MkDocs](https://www.mkdocs.org/). Hence, you may also propose to add more functionality to our wiki. Check out the manuals of both to see what else we can add.
 
-!!! info "Can I check locally how it will look?"
+!!! question "Can I check locally how it will look?"
     Sure thing! You will need to install the `mkdocs-material` engine. It might sound overwhelming but you will need only `Python` for it (even better if you have `conda`):
     ```bash
     pip install mkdocs-material
@@ -75,4 +98,6 @@ Commit your changes! You know how, right?
     ```
 
 ## 5. Create a Pull Request
-Open the page with your fork on GitHub: `github.com/<MY_ACCOUNT>/wiki/`. At this point, you should be able to find the changes you made. Somewhere at the top, you will be asked if you want to make a Pull Request and that your branch is ahead of the `main` by some commits. Make the request, by adding comments, title, and check that you are proposing the files you expect and submit it. Someone will review and accept it. That's it!
+Open the page with your fork on GitHub: `github.com/<MY_ACCOUNT>/wiki/`. At this point, you should be able to find the changes you made in your fork. Somewhere at the top, you will be asked if you want to make a Pull Request and that your branch is ahead of the `main` by some commits. Make the request, by adding comments, title, and check that you are proposing the files you expect and submit it. Someone will review and accept it. That's it!
+
+**Note, once the PR is submitted it cannot be deleted even by the moderators.**
