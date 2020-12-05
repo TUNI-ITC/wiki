@@ -1,10 +1,10 @@
 # TUNI Narvi Cluster
 
-*This amazing guide was originally posed in [wiki.eduuni.fi](https://wiki.eduuni.fi/) and composed by Heikki Huttunen. We obtained his permission to repost it here.*
+*This amazing guide was originally posed in [wiki.eduuni.fi](https://wiki.eduuni.fi/) and composed by Heikki Huttunen. We obtained his permission to use it here. It was modernized and expanded since then.*
 
-This document describes how to use the TUNI TCSC Narvi computing cluster, and describes in particular how to use the GPU cores using the Keras package. The package implements many recent deep learning methodologies in a highly configurable manner and is implemented in `Python`.
+This document describes how to use the `TUNI TCSC Narvi` computing cluster.
 
-!!! info "What is Narvi?"
+!!! question "What is Narvi?"
     * Narvi is the SLURM cluster that substituted the old merope cluster in 2017.
     * The cluster is used by researchers, faculty members, and students at Tampere University.
     * There are 140 CPU-only nodes with 3000+ CPU cores
@@ -15,63 +15,88 @@ This document describes how to use the TUNI TCSC Narvi computing cluster, and de
 
 ## How to Get an Account?
 
-1. Go to [omatunnus](http://www.tut.fi/omatunnus/)
-2. Open "Services" and make sure the "Services" tab is selected.
-3. Click "system access"
-4. Click "IT". Click "Servers". Click "TCSC". Scroll down & click "Select".
-5. In the form, enter additional information: "I need Narvi account. My supervisor is N.N.".
-6. Your supervisor will receive an acceptance link and you will be granted a new account. Soon you can log in to Narvi front end: `ssh narvi.tut.fi`
-7. In a few days, you will receive an email from TCSC telling you to send an ssh public key to them. Create a keypair (google "ssh keypair generation" for instructions) and send the **public** one to them.
-8. Soon you will be able to login to the SLURM front end `narvi.tut.fi` using `ssh`.
+1. Go to [id.tuni.fi](https://id.tuni.fi/)
+2. Choose `Identity management` → `My user rights` → `Apply for a new user right`
+3. Choose the correct contract (studen/staff).
+    - If you fill the application as a student also tell the Course name and the responsible teacher
+4. Search for `Linux Servers (LINUX-SERVERS) TCSC HPC Cluster`
+5. In the form, enter application details: `I need Narvi account. My supervisor is X.`.
+6. Your supervisor will receive an acceptance link and you will be granted a new account.
+7. In a few days, you will receive an email from TCSC telling you to send an ssh public key to them. Create a key pair (see below or just google for it) and send the *public* one to them.
+8. Soon you will be able to login to the front end `narvi.tut.fi` using `ssh`.
 
-## Commands on the Front-end
+??? question "How to generate an `ssh` key-pair 🔐?"
+    Here is how to do it on Linux and Mac systems. The instructions for Windows can be easily found on google.
+    ```bash
+    ssh-keygen -f ~/.ssh/narvi_key
+    ```
+    The command will ask for a new password which will be asked when this key is used. After, the script will save two keys (`narvi_key` and `narvi_key.pub`) in `~/.ssh/` folder. `*.pub` is the public key.
 
-To list all cluster partitions available for your account type
-```bash
-sinfo
-# or
-# sinfo -o "%20N  %10c  %10m  %25f  %10G "
-```
+    The first time you will use this key with `ssh` it may complain about permissions (`Permissions are too open.`). If so, you will need to change the permissions of the private key
+    ```bash
+    chmod 600 ~/.ssh/narvi_key
+    ```
 
-??? info "I don't see any GPU partitions"
-    E-mail the current admin of Narvi asking to add you to the GPU group. By default, you will only have access to CPU-only nodes.
+??? question "I don't see any GPU partitions"
+    Please write an e-mail to the admin (`tcsc.tau@tuni.fi`) asking to add you to the GPU group. By default, you will only have access to CPU-only nodes.
 
-To see the status of the queue type
+## How to Check the Queue
+
+To see the status of the queue, type
 ```bash
 squeue
+# for a specific partitions (e.g. `normal` or `gpu`).
+squeue -p gpu
+# for a specific user
+squeue -u <user>
 ```
-Use `-u` argument to filter the queue for a specific user (`sbatch -u <user>`) or `-p` to filter for a partition (e.g. `normal` or `gpu`).
-
-<!-- add a link to the instructions within this doc -->
-(The instructions on how to run code are provided later in this document.) To cancel a specific job you are running, use
-```bash
-scancel <JobID>
-```
-
 
 ## How to Run a Job
 
-There are two common ways to run a job at a `slurm` cluster: using `sbatch` and `srun` commands.
+
+*Remember: do not use the login node for computation – it is slow and will degrade the performance of the login node for other users!*
+
+There are two common ways to run a job at a `slurm` cluster:
+
+- `srun`
+- `sbatch`
 
 The main difference is that `srun` is interactive which means the terminal will be attached to the current session. The experience is just like with any other command in your terminal. Note, that when the queue is full you will have to wait until you get resources.
 
 If you use `sbatch`, you submit your job to the slurm queue and get your terminal back; you can disconnect, kill your terminal, etc. with no consequence. In the case of `srun`, killing the terminal would kill the job. Hence, `sbatch` is recommended.
 
-Here is the example command which will ask the cluster to run `my_script.sh` with 1 GPU and 10 CPUs, 10 GB of RAM that will run for 30 minutes:
+Here is the example `srun` command which will ask the cluster to start an interactive shell with 1 GPU (`--gres`) and 10 CPUs (`--cpus-per-task`), 10 GB of RAM (`--mem-per-cpu`) that will be available to you for 30 minutes (`--time`):
 ```
-sbatch --job-name pepe_run \
-    --partition=gpu \
-    --gres=gpu:1 \
-    --mem-per-cpu=1G \
-    --ntasks=1 \
-    --cpus-per-task=10 \
-    --time=00:30:00 \
+srun \
+    --pty \
+    --job-name pepe_run \
+    --partition gpu \
+    --gres gpu:1 \
+    --mem-per-cpu 1G \
+    --ntasks 1 \
+    --cpus-per-task 10 \
+    --time 00:30:00 \
+    /bin/bash -i
+```
+
+and this is an example `sbatch` command which will ask the cluster to run `my_script.sh` with 1 GPU and 10 CPUs, 10 GB of RAM that will run for at most 30 minutes (if the script has finished execution the job will be ended), the output and error logs will be saved to `log_JOBID.txt` (`--output`, `--error`):
+```
+sbatch \
+    --job-name pepe_run \
+    --partition gpu \
+    --gres gpu:1 \
+    --mem-per-cpu 1g \
+    --ntasks 1 \
+    --cpus-per-task 10 \
+    --time 00:30:00 \
+    --output log_%j.txt \
+    --error log_%j.txt \
     my_script.sh
 ```
-you may also use `--constraint='kepler|pascal|volta'` in order to select a specific GPU architecture.
+you may also use `--constraint='kepler|pascal|volta'` in order to select a specific gpu architecture.
 
-Instead of specifying the resources and other information as command-line arguments, you may find it useful to list them inside of `my_script.sh`:
-```bash
+Instead of specifying the resources and other information as command-line arguments, you may find it useful to list them inside of `my_script.sh` and then just use `sbatch my_script.sh`:
+```
 #!/bin/bash
 #SBATCH --job-name=pepe_run
 #SBATCH --gres=gpu:1
@@ -81,6 +106,12 @@ Instead of specifying the resources and other information as command-line argume
 ```
 
 To learn more `sbatch` hacks, a reader is also referred to [this nice tutorial](https://narvi-docs.readthedocs.io/narvi/tut/gpu.html).
+
+## How to Cancel My Job
+To cancel a specific job you are running, use
+```bash
+scancel <JobID>
+```
 
 ## How to Transfer Data?
 
