@@ -13,7 +13,7 @@ Your supervisor tells you that "Now its time!". What you need is a suitable temp
 
 Once you are done (make sure you do it well, check your spelling and grammar), you send a PDF to your supervisor(s) for review and comments. After they are happy to your thesis it is ready for pre-examination.
 
-## Pre-examination 
+## Pre-examination
 Your supervisor selects two reviewers, makes sure they are available and fills the official form (see below).
 You need to send the following two documents
 
@@ -37,6 +37,7 @@ These are sent to the PhD coordinator (Elina for DCEE students). Again the offic
  - You send the title page, thesis and articles (if separate from the thesis PDF) to Punamusta for printing using this form [https://tilaukset.omapumu.com/tampereen_yliopisto/index.php?kielivalinta=englanti](https://tilaukset.omapumu.com/tampereen_yliopisto/index.php?kielivalinta=englanti) - your PhD programme coordinator will tell you the minimum amount to be printed and paid by he faculty. You might want to pay a few more copies for your personal use.
 
 After Faculty council informs you that the permission to publish is granted:
+
  - **immediately** notify *dissertations ät tuni.fi* to publish the thesis in Trepo (example: [https://trepo.tuni.fi/handle/10024/124060](https://trepo.tuni.fi/handle/10024/124060))
  - Your supervisor should send the link to the thesis to the opponent(s)
  - **immediately** notify *dissertations ät punamusta.com* to start printing
@@ -44,13 +45,14 @@ After Faculty council informs you that the permission to publish is granted:
 
 ### Defense
 You are almost done. Next you need just a little bit of marketing and planning.
+
  - **Press release** use the template at [https://libguides.tuni.fi/dissertationpublishing/pressrelease](https://libguides.tuni.fi/dissertationpublishing/pressrelease) along with a nice picture of you and send to viestinta.tau ät tuni.fi - typically your supervisor takes care of this
  - Book defense auditorium (if physical defense)
  - Order coffee for the defense (if physical defense)
  - Prepare Zoom meeting (if online) and test everything
 
 ### "Karonkka" dinner
-This is not an official part of your defense, but expected in Finland. That means that to "thank" your opponents you will take them for a formal table served dinner to some nice place. During Karonkka, typically during the coffee, there are speeches where you thank people who contributed to your successful PhD thesis (semi-official order: opponents, supervisor, co-authors, others) 
+This is not an official part of your defense, but expected in Finland. That means that to "thank" your opponents you will take them for a formal table served dinner to some nice place. During Karonkka, typically during the coffee, there are speeches where you thank people who contributed to your successful PhD thesis (semi-official order: opponents, supervisor, co-authors, others)
 
 ## Freedom (years 5-128)
 
