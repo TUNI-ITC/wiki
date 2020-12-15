@@ -6,6 +6,7 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 
 ## University Bureaucracy
 - [Contracts and salary](University-Bureaucracy/employee.md)
+- [PhD thesis](University-Bureaucracy/phd_thesis.md)
 
 ## Technical Notes
 - [How to set up Remote Access](Technical-Notes/how-to-set-up-remote-access.md)
