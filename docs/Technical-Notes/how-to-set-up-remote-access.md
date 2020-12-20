@@ -1,8 +1,10 @@
 # How to Set up Remote Access
 
-The connection will be maintained using a proxy server (`ssh-forward.cc.tut.fi`). This is the most convenient and stable way of setting up the remote connection to your compute machine currently (to the best of our knowledge).
+_This is the guide for setting up the remote connection to your office machine and it will not tell you how to set up the machine itself (e.g. install Ubuntu, allocate disk space). If you would like some guidance on this topic, for example, you would want to make your remote machine to "look" like the rest of our machines, please refer to [this unofficial guide](https://github.com/v-iashin/TuniSurvivalKit/blob/master/how_to_setup_a_desktop.md)._
 
-I assume that you have an Ubuntu 16.04 or 18.04 desktop (**host**) at your office and you would like to access it remotely from, let's say, your personal laptop (**client**).
+We assume that you have an Ubuntu 16.04 or 18.04 desktop (**host**) at your office and you would like to access it remotely from, let's say, your personal laptop (**client**). If the machine is already set up and you would like to just learn how to connect to it, use only the guide for a client.
+
+The connection will be maintained using a proxy server (`ssh-forward.cc.tut.fi`). Currently, this is the most convenient and stable way of setting up the remote connection to your compute machine (to the best of our knowledge – let us know if there is something else).
 
 The host machine will be reachable using a University-maintained laptop using University `TUNI-STAFF` WiFi or a pre-installed TUNI VPN, for a self-maintained laptop you will need to do something extra and we have it in this guide.
 
