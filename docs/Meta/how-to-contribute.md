@@ -24,7 +24,7 @@ There are two options on how to contribute to Wiki:
 
     Synchronizing a fork is a simple procedure but requires you to run several lines in your terminal:
     ```bash
-    # (this line for the first time) Add the upsteam to your git folder.
+    # (this line is for the first time only) Add the upsteam to your git folder.
     git remote add upstream https://github.com/TUNI-ITC/wiki.git
     git fetch upstream
     git checkout main
