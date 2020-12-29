@@ -20,6 +20,7 @@ This is the most challenging part, but don't worry, your supervisor will tell yo
 It is difficult to tell a generic rule when you're reaady to start writing your thesis as that varies a lot between the fields, even between fields close to each other. You should discuss with your supervisor each year what is the stage of your PhD studies and she/he certainly tells you when it is time to start writing.
 
 Before writing you need a suitable template. Vast majority of people prefer Latex as it is just so convenient for writing scientific text.
+
 * A popular template is provided by Ville Koljonen: [https://www.overleaf.com/read/zskzfgpnpjcz](https://www.overleaf.com/read/zskzfgpnpjcz)
 
 **Output:** A thesis manuscript that summarizes your research and results. The thesis can be a monograph or a compilation thesis that includes your original articles. Write using a meaningful structure and beautiful grammar and send it for comments to your supervisor(s) before proceeding to the next stage.
@@ -34,11 +35,12 @@ Your supervisor selects two reviewers, makes sure they are available and willing
  2. PhD thesis in PDF format. If a compilation thesis, then it should include the articles. Make a single PDF and if its size >15MB you should downscale your images before compiling the PDF
 
 The documents should be sent to the *Academic officer* of your doctoral program, for example deadlines and officers for the Doctoral program of Computing and Electrical Engineering (CEE) can be found from
+
 * [DPCEE](https://intra.tuni.fi/en/handbook?page=5612)
- 
+
 Your documents will be processed by the Faculty council and you will receive an email notification once this is done. Your pre-examiners will also receive a formal invitation and the submitted PhD thesis. Now you cross your fingers, wait for two months and hope for positive reviews. Time to think what you will do next in your life and perhaps stat to look for a position in academia or industry!
 
-**Output:** Faculty council decision for pre-examination. Official invitations to the pre-examiners. 
+**Output:** Faculty council decision for pre-examination. Official invitations to the pre-examiners.
 
 ## Stage 4 - Defense
 
@@ -47,7 +49,7 @@ Your documents will be processed by the Faculty council and you will receive an 
 Your supervisor selects 1-2 opponents who will come and publicly "torture" you, i.e. ask nasty questions about your thesis. You also need to publish your thesis, i.e. make it publicly and openly available. Submit the following documents to the Academic Officer of your doctoral program:
 
  1. The form for the permission to publish the thesis available  at [https://wiki.tamk.fi/display/DPCEEO/8.+Lomakkeet+ja+ohjeet](https://wiki.tamk.fi/display/DPCEEO/8.+Lomakkeet+ja+ohjeet)
- 2. A document describing the changes requested by the pre-examiners (if requested). This document is similar to "Revision letter" where you reply to reviewers' comments if they requested "major revision" for your article. If necessary discuss with your supervisor how to do these. 
+ 2. A document describing the changes requested by the pre-examiners (if requested). This document is similar to "Revision letter" where you reply to reviewers' comments if they requested "major revision" for your article. If necessary discuss with your supervisor how to do these.
  3. The form about the defense and suitable opponent(s) written by your supervisor and available at [https://wiki.tamk.fi/display/DPCEEO/8.+Lomakkeet+ja+ohjeet](https://wiki.tamk.fi/display/DPCEEO/8.+Lomakkeet+ja+ohjeet)
 
 Again the official permission comes from the Faculty council, but meanwhile you already prepare the following:
@@ -74,6 +76,7 @@ You are almost done. Next you need just a little bit of marketing and planning.
 
 ### In-defense - The defense act
 This is a formal "act" with pre-defined lyrics for custos, candidate and opponents. More details available at
+
 * [https://intra.tuni.fi/en/handbook?page=4231](https://intra.tuni.fi/en/handbook?page=4231)
 
 ### Post-defense -  "Karonkka" dinner
