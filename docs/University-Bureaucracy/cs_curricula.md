@@ -9,4 +9,4 @@ Below are links to relevant information in TAU Web pages:
 
 The Signal Processing and Machine Learning (SPML) major is offered in the Bachelor of Science and Technology degree program of the [Computing and Electrical Engineering](https://www.tuni.fi/en/study-with-us/science-and-engineering-computing-and-electrical-engineering). Our graduates are some of the most wanted in Finnish IT and EE companies and research institutions. The SPML major consists of three mandatory courses (tot 15 cr) and 15 cr that can be selected from the suggested courses or by personal study plan.
 
-![SPML BSc structure](assets/SPML_BSc_structure.png)
+![SPML BSc structure](assets/SPML_BSc_FIN_structure.png)
