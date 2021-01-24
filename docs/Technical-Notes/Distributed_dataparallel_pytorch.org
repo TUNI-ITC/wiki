@@ -1,0 +1,418 @@
+#+TITLE: Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+#+options: toc nil
+
+* Motivation
+
+Training a Deep Neural Network(DNNs) is notoriously time-consuming especially nowadays when they are getting bigger to get better. To reduce the training time, we mostly train it on the multiple gpus within a single node or across different nodes. This tutorial is focused on the latter where multiple nodes are utilised using PyTorch. Although there are many tutorials available on the web including one from the [[https://pytorch.org/tutorials/intermediate/ddp_tutorial.html][PyTorch]], they are not self-sufficient in explaining some of the key issues like how to run the code, how to save checkpoints, or how to create a batch script for this in the severs. I have given a starter kit here which addresses these issues and can be helpful to students of our university in setting up their first multi-gpu training in the servers like CSC-Puhti or Narvi.
+
+* Outline
+
+Pytorch mostly provides two functions namely ~nn.DataParallel~ and ~nn.DistributedDataParallel~ to use multiple gpus in a single node and multiple nodes during the training respectively. However, it is recommended by [[https://pytorch.org/tutorials/intermediate/ddp_tutorial.html][Pytorch]] to use ~nn.DistributedDataParallel~ even in the single node to train faster than the ~nn.DataParallel~. For more details, I would recommend reading the Pytorch docs. This tutorial assumes that the reader is familiar with the DNNs training using Pytorch and basic operations on the gpu-servers of our university.
+
+* Setting up a PyTorch model without DistributedDataParallel
+
+ I have considered a simple Auto-Encoder(AE) model for demonstration where the inputs are images of digits from [[http://yann.lecun.com/exdb/mnist/][MNIST]] data-set. Just to be clear, AE takes images as input and encodes it to a much smaller dimension w.r.t its inputs and then try to reconstruct the images back from those smaller dimensions. It can be considered as a process of compression and decompression. We train the network to learn this smaller dimension such that the reconstructed image is very close to input. Let's begin by defining the network structure.
+ #+NAME: model
+ #+BEGIN_SRC jupyter-python :session python
+   import torch
+   import torch.nn as nn
+   import torchvision
+   from argparse import ArgumentParser
+
+   class AE(nn.Module):
+       def __init__(self, **kwargs):
+	  super().__init__()
+
+	  self.net = nn.Sequential(
+	       nn.Linear(in_features=kwargs["input_shape"], out_features=128),
+	       nn.ReLU(inplace=True),
+	       nn.Linear(in_features=128, out_features=128), # small dimension
+	       nn.ReLU(inplace=True),
+	       nn.Linear(in_features=128, out_features=128),
+	       nn.ReLU(inplace=True),
+	       nn.Linear(in_features=128, out_features=kwargs["input_shape"]), # Recconstruction of input
+
+	       nn.ReLU(inplace=True))
+
+       def forward(self, features):
+	  reconstructed = self.net(features)
+	  return reconstructed
+ #+END_SRC
+
+ #+RESULTS:
+
+ Lets create a =train()= function where we load the MNIST data-set and this can easily be done from the ~torchvision.dataset~ library as follows
+
+ #+NAME: train
+ #+BEGIN_SRC jupyter-python :session python
+   def train(gpu, args):
+       transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
+
+       train_dataset = torchvision.datasets.MNIST(root="~/mnist_dataset", train=True, transform=transform, download=True)
+
+       train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=4, pin_memory=True)
+
+ #+END_SRC
+
+ #+RESULTS: train
+
+ #+RESULTS:
+
+ Transfer the model to the GPU now and declare the optimiser and loss criterion for the training process.
+ #+NAME: train2
+ #+BEGIN_SRC jupyter-python :session python :noweb yes
+ def train(gpu, args):
+     transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
+
+     train_dataset = torchvision.datasets.MNIST(root="./mnist_dataset", train=True, transform=transform, download=True)
+
+     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=4, pin_memory=True)
+
+     # load the model to the specified device, gpu-0 in our case
+     model = AE(input_shape=784).cuda(gpu)
+     # create an optimizer object
+     # Adam optimizer with learning rate 1e-3
+     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+     # Loss function
+     criterion = nn.MSELoss()
+ #+END_SRC
+
+ #+RESULTS: train2
+
+ #+RESULTS:
+
+ Now wrap everything in the training function and start training
+ #+NAME: final_train
+ #+BEGIN_SRC jupyter-python :session python :noweb yes
+   def train(gpu, args):
+       transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
+
+       train_dataset = torchvision.datasets.MNIST(root="./mnist_dataset", train=True, transform=transform, download=True)
+
+       train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=4, pin_memory=True)
+
+       # load the model to the specified device, gpu-0 in our case
+       model = AE(input_shape=784).cuda(gpu)
+       # create an optimizer object
+       # Adam optimizer with learning rate 1e-3
+       optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+       # Loss function
+       criterion = nn.MSELoss()
+
+       for epoch in range(args.epochs):
+	  loss = 0
+	  for batch_features, _ in train_loader:
+	          # reshape mini-batch data to [N, 784] matrix
+	          # load it to the active device
+		  batch_features = batch_features.view(-1, 784).cuda(gpu)
+
+	          # reset the gradients back to zero
+	          # PyTorch accumulates gradients on subsequent backward passes
+		  optimizer.zero_grad()
+
+	          # compute reconstructions
+		  outputs = model(batch_features)
+
+	          # compute training reconstruction loss
+		  train_loss = criterion(outputs, batch_features)
+
+	          # compute accumulated gradients
+		  train_loss.backward()
+	          # pe-rform parameter update based on current gradients
+		  optimizer.step()
+
+	          # add the mini-batch training loss to epoch loss
+		  loss += train_loss.item()
+
+	          # compute the epoch training loss
+	  loss = loss / len(train_loader)
+
+	  # display the epoch training loss
+	  print("epoch : {}/{}, loss = {:.6f}".format(epoch + 1, args.epochs, loss))
+
+ #+END_SRC
+
+ #+RESULTS:
+
+ Now lets finish this code with a =main()= function that calls the train function and defines the required arguments.
+
+ #+BEGIN_SRC jupyter-python :session python :noweb yes :tangle "ae.py"
+def main():
+     parser = ArgumentParser()
+     parser.add_argument('--ngpus', default=1, type=int,
+                         help='number of gpus per node')
+
+     parser.add_argument('--epochs', default=2, type=int, metavar='N',
+                         help='number of total epochs to run')
+     args = parser.parse_args()
+     train(0, args)
+
+if __name__ == '__main__':
+     main()
+
+ #+END_SRC
+
+ #+RESULTS:
+
+* Setting up the same model with DistributedDataparallel
+
+With the multiprocessing, we will run our training script in each node separately and ask PyTorch to handle the synchronisation between them. It makes sure that in each iteration, the same network weights are present in every node but use different data for the forward pass. Then the gradients are accumulated from every node to calculate the change in weights which will be sent to each node for the update. In short, the same network operates on different data in different nodes in parallel to make things faster. To let this internal communication happen between the nodes, we need few information to setup the DistributedParallel environment such as 1. how many nodes we are using, 2. what is the ip-address of the master node and 3. The number of gpus in a single node. I have changed the order of the above code to make it more understandable. We will first start from the =main= function by defining all the necessary variables.
+
+ + A single node can be understood as a single computer with its own gpus and cpus. Here we need multiple of such computers. One thing to remember is that these
+   nodes should be connected to each other. In the servers, they are always connected to each other so we can use it without any problems. In the script,
+   we need to mention the ip-address and port of one of the nodes (we call it the master node) so that all other nodes can be connected to that automatically
+   when we start the script in those nodes.
+#+NAME: main
+#+BEGIN_SRC jupyter-python :session python2
+  import torch
+  import torch.nn as nn
+  import torchvision
+  import torch.multiprocessing as mp
+  import torch.distributed as dist
+  from argparse import ArgumentParser
+  import os
+
+if __name__ == "__main__":
+
+    parser = ArgumentParser()
+    parser.add_argument('--nodes', default=1, type=int)
+    parser.add_argument('--local_ranks', default=0, type=int, help='an unique number associated to each node starting from zero to number of nodes-1')
+    parser.add_argument('--ip_adress', type=str, help='ip address of the host node', required=True)
+    parser.add_argument("--checkpoint", default=None, help="path to checkpoint to restore")
+    parser.add_argument('--ngpus', default=1, type=int, help='number of gpus per node')
+    parser.add_argument('--epochs', default=2, type=int, metavar='N',
+                        help='number of total epochs to run')
+
+    args = parser.parse_args()
+    args.world_size = args.ngpu * args.nodes   # Total number of gpus availabe to us.
+    os.environ['MASTER_ADDR'] = args.ip_adress # add the ip address to the environment variable so it can be easily avialbale
+    print("ip_adress is", args.ip_adress)
+    os.environ['MASTER_PORT'] = '8888'
+    os.environ['WORLD_SIZE'] = str(args.world_size)
+    mp.spawn(train, nprocs=args.ngpus, args=(args,))  #nprocs: number of process which is equal to args.ngpu here
+
+#+END_SRC
+
+
+ + You can imagine the =local_rank= as an unique number associated to each node starting from zero to number of nodes-1. We assign zero rank to the node whose
+   ip-address is passed to the =main()= and we start the script first on that node. Further, we are going use this number to calculate one more rank for each gpu
+   in that node.
+ + Instead of calling the =train= function once, we spawn ~args.ngpus~ processes in each node to run ~args.ngpus~ instances of =train= function in parallel.
+
+ Now lets define the function =train= that can handle these multiple processes.
+
+#+NAME: train3
+#+BEGIN_SRC jupyter-python :session python2
+
+  def train(gpu, args):
+
+      args.gpu = gpu
+      print('gpu:',gpu)
+      rank = args.local_ranks * args.ngpus + gpu  # rank calculation for each process per gpu so that they can be identified uniquely.
+      print('rank:',rank)
+      dist.init_process_group(backend='nccl',                 # Boilerplate code to initialize the parallel prccess. It looks for ip-address and port which we
+							      # have set as environ variable. If you don't want to set it in the main then you can pass it by
+							      # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
+							      # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
+			      init_method='env://',
+			      world_size=args.world_size,
+			      rank=rank
+			      )
+      torch.manual_seed(0)      # start from the same randomness in different nodes. If you don't set it then networks can have different weights in different
+				# nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
+      torch.cuda.set_device(args.gpu) # set the gpu for each processes
+
+
+      transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
+
+      train_dataset = torchvision.datasets.MNIST(root="~/mnist_dataset", train=True, transform=transform, download=True)
+      train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas=args.world_size, rank=rank) # Ensures that each process gets differnt data from the batch.
+
+      train_loader = torch.utils.data.DataLoader(train_dataset,
+							 batch_size=int(128/args.ngpus), # calculate the batch size for each process in the node.
+							 shuffle=(train_sampler
+								  is None),
+							 num_workers=4,
+							 pin_memory=True,
+							 sampler=train_sampler)
+#+END_SRC
+ - As we are going to submit the training script to each node separately, we need to set a random seed to fix the randomness involved in the code. For example, in the very first iteration the network weights will start from the same random weights (seed=0) in the different nodes. Then PyTorch will handle the synchronisation and at the end of training, we will have the same network weights in each node.
+ - ~train\_sampler~, ~manual\_seed~ and ~modified batch size in the dataloader~ are important steps to remember while setting this up.
+
+Finally, wrap the model as DistributedDataparallel and start the training.
+
+#+BEGIN_SRC jupyter-python :session python2 :noweb yes :tangle "ae_ddp.py"
+def train(gpu, args):
+
+    args.gpu = gpu
+    print('gpu:',gpu)
+    rank = args.local_ranks * args.ngpus + gpu  # rank calculation for each process per gpu so that they can be identified uniquely.
+    print('rank:',rank)
+    dist.init_process_group(backend='nccl',                 # Boilerplate code to initialise the parallel process. It looks for ip-address and port which we
+							    # have set as environ variable. If you don't want to set it in the main then you can pass it by
+							    # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
+							    # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
+			    init_method='env://',
+			    world_size=args.world_size,
+			    rank=rank
+			    )
+    torch.manual_seed(0)      # start from the same randomness in different nodes. If you don't set it then networks can have different weights in different
+			      # nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
+    torch.cuda.set_device(args.gpu) # set the gpu for each processes
+
+
+    transform = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
+
+    train_dataset = torchvision.datasets.MNIST(root="./mnist_dataset", train=True, transform=transform, download=True)
+    train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas=args.world_size, rank=rank) # Ensures that each process gets differnt data from the batch.
+
+    train_loader = torch.utils.data.DataLoader(train_dataset,
+						       batch_size=int(128/args.ngpus), # calculate the batch size for each process in the node.
+						       shuffle=(train_sampler
+								is None),
+						       num_workers=4,
+						       pin_memory=True,
+						       sampler=train_sampler)
+
+
+    # load the model to the specified device, gpu-0 in our case
+    model = AE(input_shape=784).cuda(args.gpus)
+    model = torch.nn.parallel.DistributedDataParallel(model_sync, device_ids=[args.gpu], find_unused_parameters=True)
+    # create an optimizer object
+    # Adam optimizer with learning rate 1e-3
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    # Loss function
+    criterion = nn.MSELoss()
+
+    for epoch in range(args.epochs):
+	loss = 0
+	for batch_features, _ in train_loader:
+	    # reshape mini-batch data to [N, 784] matrix
+	    # load it to the active device
+	    batch_features = batch_features.view(-1, 784).cuda(args.gpus)
+
+	    # reset the gradients back to zero
+	    # PyTorch accumulates gradients on subsequent backward passes
+	    optimizer.zero_grad()
+
+	    # compute reconstructions
+	    outputs = model(batch_features)
+
+	    # compute training reconstruction loss
+	    train_loss = criterion(outputs, batch_features)
+
+	    # compute accumulated gradients
+	    train_loss.backward()
+
+	    # perform parameter update based on current gradients
+	    optimizer.step()
+
+	    # add the mini-batch training loss to epoch loss
+	    loss += train_loss.item()
+
+	# compute the epoch training loss
+	loss = loss / len(train_loader)
+
+	# display the epoch training loss
+	print("epoch : {}/{}, loss = {:.6f}".format(epoch + 1, args.epochs, loss))
+	if rank == 0:
+ 	   torch.save({'state_dict': model.state_dict(),
+                       'optimizer': optimizer.state_dict(),
+                       'epoch': args.epochs,
+                       }, "./model.pth")
+
+#+END_SRC
+
+ + Save the model only when the rank is zero because all the models are the same. We only need to save one copy of the model. If we are not careful here then all
+   the processes will try to save weights and can corrupt the weights.
+
+Save the script as =train.py= in the CSC or Narvi server and submit an interactive job with two gpu nodes (Lets quickly test it on ~gputest~ node as =srun --pty --account=Project_** --nodes=2 -p gputest --gres=gpu:v100:1,nvme:100 -t 00:15:00 --mem-per-cpu=20000 --ntasks-per-node=1 --cpus-per-task=8 /bin/bash -i=). Once it is allocated, ssh to each node in two terminals as =ssh <node name>=) and submit the job by typing =python train.py --ip_adress=**.**.**.** --nodes 2 --local_rank 0 --ngpus 1 --epochs 1= and =python train.py --ip_adress=<same as the first> --nodes 2 --local_rank 1 --ngpus 1 --epochs 1= to each of them respectively. Two job should start with synchronisation and training will begin soon after.
+
++ The ip-address of a node can be obtained by =ping <node name>=
+
+* DistributedDataparallel as a Batch job in the servers
+
+When we are submitting the interactive jobs, we know the exact node name and can obtain the ip-address for that beforehand. However, in the batch job, it needs to be programmed to automate most of the stuff. We have to make minimum changes to the existing code and write a =.sh= script to submit the job. Our =train.py= script are modified only in the first few lines of the =train()= function as follows
+
+#+BEGIN_SRC jupyter-python :session python
+  def train(gpu, args):
+
+      args.gpu = gpu
+      print('gpu:',gpu)
+
+      rank = int(os.environ.get("SLURM_NODEID")) * args.ngpus + gpu  # rank calculation for each process per gpu so that they can be identified uniquely.
+      print('rank:',rank)
+      dist.init_process_group(backend='nccl',                 # Boilerplate code to initialise the parallel process. It looks for ip-address and port which we
+							      # have set as environ variable. If you don't want to set it in the main then you can pass it by
+							      # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
+							      # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
+			      init_method='env://',
+			      world_size=args.world_size,
+			      rank=rank
+			      )
+      torch.manual_seed(0)      # start from the same randomness in different nodes. If you don't set it then networks can have differnt weights in different
+				# nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
+      torch.cuda.set_device(args.gpu) # set the gpu for each processes
+
+#+END_SRC
+
++ Instead of using local rank in calculation of process rank, we use environment variable ~$SLURM_NODEID~ which is unique for each slurm node.
+
+Keeping everything else in the code same, now lets write the batch script for CSC-puhti. Same script can be used for Narvi.
+
+#+BEGIN_SRC sh
+#!/bin/bash
+#SBATCH --job-name=name
+#SBATCH --account=Project_******
+#SBATCH -o out.txt
+#SBATCH -e err.txt
+#SBATCH --partition=gpu
+#SBATCH --time=08:00:00
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem-per-cpu=8000
+#SBATCH --gres=gpu:v100:4
+#SBATCH  --nodes=2
+module load gcc/8.3.0 cuda/10.1.168
+source <virtual environment name>
+
+export NCCL_DEBUG=INFO   # if some error happens in the initialation of parallel process then you can get the debug info.
+
+export NCCL_DEBUG_SUBSYS=ALL
+
+ip1=`hostname -I | awk '{print $2}'` # find the ip-address of one of the node. Treat it as master
+echo $ip1
+
+export MASTER_ADDR=$(hostname) #Store the master node’s IP address in the MASTER_ADDR environment variable.
+
+echo "r$SLURM_NODEID master: $MASTER_ADDR"
+
+
+echo "r$SLURM_NODEID Launching python script"
+
+srun python train.py --nodes=2 --ngpus 4 --ip_adress $ip1 --epochs 1
+
+#+END_SRC
+
+* Tips and Tricks
+
+ - If you have =os.mkdir= inside the script then always wrap it with ~try and except~. Multiple processes will try to create a new folder and they will throw
+   errors that the directory already exists.
+ - When resuming the network weights if your model complains that the tensors are not on the same advice and points to the optimiser then it is mostly caused
+   by this [[https://github.com/pytorch/pytorch/issues/2830][optimizer-error]]. Just add these few lines after loading the optimizer from the checkpoints.
+
+   #+BEGIN_SRC jupyter-python :session python
+
+    for state in optimizer.state.values():
+	for k, v in state.items():
+	    if isinstance(v, torch.Tensor):
+		state[k] = v.cuda(gpus)
+   #+END_SRC
+ - To run on a single node with multiple gpus, just make the ~--nodes=1~ in the batch script.
+ - If you Batchnorm*d inside the network then you may consider replacing them with ~sync-batchnorm~ to have better batch statistics while using
+   Distributeddataparallel.
+ - Use this feature when it is required to optimise the gpu usage.
+
+* Acknowledgements
+
+I found this [[https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html][article]] really helpful when I was setting up my Distributeddataparallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things.
