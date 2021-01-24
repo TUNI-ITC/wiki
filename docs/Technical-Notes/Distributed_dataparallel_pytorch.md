@@ -2,31 +2,25 @@
 
 ## Table of Contents
 
-1.  [Motivation](#org0f87d25)
-2.  [Outline](#org759abb5)
-3.  [Setting up a PyTorch model without DistributedDataParallel](#org491957c)
-4.  [Setting up the same model with DistributedDataParallel](#org65dc2d5)
-5.  [DistributedDataParallel as a Batch job in the servers](#org74190c5)
-6.  [Tips and Tricks](#org2ff6500)
-7.  [Acknowledgements](#orgc23abda)
+1.  [Motivation](#motivation)
+2.  [Outline](#outline)
+3.  [Setting up a PyTorch model without DistributedDataParallel](#setting-up-a-pytorch-model-without-distributeddataparallel)
+4.  [Setting up the same model with DistributedDataParallel](#setting-up-the-same-model-with-distributeddataparallel)
+5.  [DistributedDataParallel as a Batch job in the servers](#distributeddataparallel-as-a-batch-job-in-the-servers)
+6.  [Tips and Tricks](#tips-and-tricks)
+7.  [Acknowledgements](#acknowledgements)
 
 
-
-<a id="org0f87d25"></a>
 
 ## Motivation
 
 Training a Deep Neural Network (DNNs) is notoriously time-consuming especially nowadays when they are getting bigger to get better. To reduce the training time, we mostly train it on the multiple gpus within a single node or across different nodes. This tutorial is focused on the latter where multiple nodes are utilised using PyTorch. Although there are many tutorials available on the web including one from the [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html), they are not self-sufficient in explaining some of the key issues like how to run the code, how to save checkpoints, or how to create a batch script for this in the severs. I have given a starter kit here which addresses these issues and can be helpful to students of our university in setting up their first multi-gpu training in the servers like CSC-Puhti or Narvi.
 
 
-<a id="org759abb5"></a>
-
 ## Outline
 
 PyTorch mostly provides two functions namely `nn.DataParallel` and `nn.DistributedDataParallel` to use multiple gpus in a single node and multiple nodes during the training respectively. However, it is recommended by [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) to use `nn.DistributedDataParallel` even in the single node to train faster than the `nn.DataParallel`. For more details, I would recommend reading the PyTorch docs. This tutorial assumes that the reader is familiar with the DNNs training using PyTorch and basic operations on the gpu-servers of our university.
 
-
-<a id="org491957c"></a>
 
 ## Setting up a PyTorch model without DistributedDataParallel
 
@@ -170,7 +164,6 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-<a id="org65dc2d5"></a>
 
 ## Setting up the same model with DistributedDataParallel
 
@@ -389,7 +382,6 @@ Save the script as `train.py` in the CSC or Narvi server and submit an interacti
 -   The ip-address of a node can be obtained by `ping <node name>`
 
 
-<a id="org74190c5"></a>
 
 ## DistributedDataParallel as a Batch job in the servers
 
@@ -469,8 +461,6 @@ echo "r$SLURM_NODEID Launching python script"
 srun python train.py --nodes=2 --ngpus 4 --ip_adress $ip1 --epochs 1
 ```
 
-<a id="org2ff6500"></a>
-
 ## Tips and Tricks
 
 -   If you have `os.mkdir` inside the script then always wrap it with `try and except`. Multiple processes will try to create a new folder and they will throw errors that the directory already exists.
@@ -487,8 +477,6 @@ for state in optimizer.state.values():
 -   If you Batchnorm\*d inside the network then you may consider replacing them with `sync-batchnorm` to have better batch statistics while using DistributedDataParallel.
 -   Use this feature when it is required to optimise the gpu usage.
 
-
-<a id="orgc23abda"></a>
 
 ## Acknowledgements
 
