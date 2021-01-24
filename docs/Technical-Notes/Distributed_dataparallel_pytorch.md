@@ -1,6 +1,6 @@
 # Distributed data parallel training using PyTorch on the multiple nodes of CSC and Narvi clusters
 
-# Table of Contents
+## Table of Contents
 
 1.  [Motivation](#org0f87d25)
 2.  [Outline](#org759abb5)
@@ -14,21 +14,21 @@
 
 <a id="org0f87d25"></a>
 
-# Motivation
+## Motivation
 
 Training a Deep Neural Network (DNNs) is notoriously time-consuming especially nowadays when they are getting bigger to get better. To reduce the training time, we mostly train it on the multiple gpus within a single node or across different nodes. This tutorial is focused on the latter where multiple nodes are utilised using PyTorch. Although there are many tutorials available on the web including one from the [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html), they are not self-sufficient in explaining some of the key issues like how to run the code, how to save checkpoints, or how to create a batch script for this in the severs. I have given a starter kit here which addresses these issues and can be helpful to students of our university in setting up their first multi-gpu training in the servers like CSC-Puhti or Narvi.
 
 
 <a id="org759abb5"></a>
 
-# Outline
+## Outline
 
 PyTorch mostly provides two functions namely `nn.DataParallel` and `nn.DistributedDataParallel` to use multiple gpus in a single node and multiple nodes during the training respectively. However, it is recommended by [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) to use `nn.DistributedDataParallel` even in the single node to train faster than the `nn.DataParallel`. For more details, I would recommend reading the PyTorch docs. This tutorial assumes that the reader is familiar with the DNNs training using PyTorch and basic operations on the gpu-servers of our university.
 
 
 <a id="org491957c"></a>
 
-# Setting up a PyTorch model without DistributedDataParallel
+## Setting up a PyTorch model without DistributedDataParallel
 
 I have considered a simple Auto-Encoder (AE) model for demonstration where the inputs are images of digits from [MNIST](http://yann.lecun.com/exdb/mnist/) data-set. Just to be clear, AE takes images as input and encodes it to a much smaller dimension w.r.t its inputs and then try to reconstruct the images back from those smaller dimensions. It can be considered as a process of compression and decompression. We train the network to learn this smaller dimension such that the reconstructed image is very close to input. Let's begin by defining the network structure.
 
@@ -172,7 +172,7 @@ if __name__ == '__main__':
 ```
 <a id="org65dc2d5"></a>
 
-# Setting up the same model with DistributedDataParallel
+## Setting up the same model with DistributedDataParallel
 
 With the multiprocessing, we will run our training script in each node separately and ask PyTorch to handle the synchronisation between them. It makes sure that in each iteration, the same network weights are present in every node but use different data for the forward pass. Then the gradients are accumulated from every node to calculate the change in weights which will be sent to each node for the update. In short, the same network operates on different data in different nodes in parallel to make things faster. To let this internal communication happen between the nodes, we need few information to setup the DistributedParallel environment such as 1. how many nodes we are using, 2. what is the ip-address of the master node and 3. The number of gpus in a single node. I have changed the order of the above code to make it more understandable. We will first start from the `main` function by defining all the necessary variables.
 
@@ -397,7 +397,7 @@ Save the script as `train.py` in the CSC or Narvi server and submit an interacti
 
 <a id="org74190c5"></a>
 
-# DistributedDataParallel as a Batch job in the servers
+## DistributedDataParallel as a Batch job in the servers
 
 When we are submitting the interactive jobs, we know the exact node name and can obtain the ip-address for that beforehand. However, in the batch job, it needs to be programmed to automate most of the stuff. We have to make minimum changes to the existing code and write a `.sh` script to submit the job. Our `train.py` script are modified only in the first few lines of the `train()` function as follows
 
@@ -477,7 +477,7 @@ srun python train.py --nodes=2 --ngpus 4 --ip_adress $ip1 --epochs 1
 
 <a id="org2ff6500"></a>
 
-# Tips and Tricks
+## Tips and Tricks
 
 -   If you have `os.mkdir` inside the script then always wrap it with `try and except`. Multiple processes will try to create a new folder and they will throw
     errors that the directory already exists.
@@ -499,6 +499,6 @@ for state in optimizer.state.values():
 
 <a id="orgc23abda"></a>
 
-# Acknowledgements
+## Acknowledgements
 
 I found this [article](https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html) really helpful when I was setting up my DistributedDataParallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things. If you have any suggestions then reach me at `soumya.tripathy@tuni.fi`.
