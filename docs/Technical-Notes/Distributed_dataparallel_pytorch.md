@@ -1,12 +1,12 @@
-# Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+# Distributed data parallel training using PyTorch on the multiple nodes of CSC and Narvi clusters
 
 # Table of Contents
 
 1.  [Motivation](#org0f87d25)
 2.  [Outline](#org759abb5)
 3.  [Setting up a PyTorch model without DistributedDataParallel](#org491957c)
-4.  [Setting up the same model with DistributedDataparallel](#org65dc2d5)
-5.  [DistributedDataparallel as a Batch job in the servers](#org74190c5)
+4.  [Setting up the same model with DistributedDataParallel](#org65dc2d5)
+5.  [DistributedDataParallel as a Batch job in the servers](#org74190c5)
 6.  [Tips and Tricks](#org2ff6500)
 7.  [Acknowledgements](#orgc23abda)
 
@@ -16,21 +16,21 @@
 
 # Motivation
 
-Training a Deep Neural Network(DNNs) is notoriously time-consuming especially nowadays when they are getting bigger to get better. To reduce the training time, we mostly train it on the multiple gpus within a single node or across different nodes. This tutorial is focused on the latter where multiple nodes are utilised using PyTorch. Although there are many tutorials available on the web including one from the [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html), they are not self-sufficient in explaining some of the key issues like how to run the code, how to save checkpoints, or how to create a batch script for this in the severs. I have given a starter kit here which addresses these issues and can be helpful to students of our university in setting up their first multi-gpu training in the servers like CSC-Puhti or Narvi.
+Training a Deep Neural Network (DNNs) is notoriously time-consuming especially nowadays when they are getting bigger to get better. To reduce the training time, we mostly train it on the multiple gpus within a single node or across different nodes. This tutorial is focused on the latter where multiple nodes are utilised using PyTorch. Although there are many tutorials available on the web including one from the [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html), they are not self-sufficient in explaining some of the key issues like how to run the code, how to save checkpoints, or how to create a batch script for this in the severs. I have given a starter kit here which addresses these issues and can be helpful to students of our university in setting up their first multi-gpu training in the servers like CSC-Puhti or Narvi.
 
 
 <a id="org759abb5"></a>
 
 # Outline
 
-Pytorch mostly provides two functions namely `nn.DataParallel` and `nn.DistributedDataParallel` to use multiple gpus in a single node and multiple nodes during the training respectively. However, it is recommended by [Pytorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) to use `nn.DistributedDataParallel` even in the single node to train faster than the `nn.DataParallel`. For more details, I would recommend reading the Pytorch docs. This tutorial assumes that the reader is familiar with the DNNs training using Pytorch and basic operations on the gpu-servers of our university.
+PyTorch mostly provides two functions namely `nn.DataParallel` and `nn.DistributedDataParallel` to use multiple gpus in a single node and multiple nodes during the training respectively. However, it is recommended by [PyTorch](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) to use `nn.DistributedDataParallel` even in the single node to train faster than the `nn.DataParallel`. For more details, I would recommend reading the PyTorch docs. This tutorial assumes that the reader is familiar with the DNNs training using PyTorch and basic operations on the gpu-servers of our university.
 
 
 <a id="org491957c"></a>
 
 # Setting up a PyTorch model without DistributedDataParallel
 
-I have considered a simple Auto-Encoder(AE) model for demonstration where the inputs are images of digits from [MNIST](http://yann.lecun.com/exdb/mnist/) data-set. Just to be clear, AE takes images as input and encodes it to a much smaller dimension w.r.t its inputs and then try to reconstruct the images back from those smaller dimensions. It can be considered as a process of compression and decompression. We train the network to learn this smaller dimension such that the reconstructed image is very close to input. Let's begin by defining the network structure.
+I have considered a simple Auto-Encoder (AE) model for demonstration where the inputs are images of digits from [MNIST](http://yann.lecun.com/exdb/mnist/) data-set. Just to be clear, AE takes images as input and encodes it to a much smaller dimension w.r.t its inputs and then try to reconstruct the images back from those smaller dimensions. It can be considered as a process of compression and decompression. We train the network to learn this smaller dimension such that the reconstructed image is very close to input. Let's begin by defining the network structure.
 
 ``` python
     import torch
@@ -43,15 +43,15 @@ I have considered a simple Auto-Encoder(AE) model for demonstration where the in
            super().__init__()
 
            self.net = nn.Sequential(
-    	    nn.Linear(in_features=kwargs["input_shape"], out_features=128),
-    	    nn.ReLU(inplace=True),
-    	    nn.Linear(in_features=128, out_features=128), # small dimension
-    	    nn.ReLU(inplace=True),
-    	    nn.Linear(in_features=128, out_features=128),
-    	    nn.ReLU(inplace=True),
-    	    nn.Linear(in_features=128, out_features=kwargs["input_shape"]), # Recconstruction of input
+            nn.Linear(in_features=kwargs["input_shape"], out_features=128),
+            nn.ReLU(inplace=True),
+            nn.Linear(in_features=128, out_features=128), # small dimension
+            nn.ReLU(inplace=True),
+            nn.Linear(in_features=128, out_features=128),
+            nn.ReLU(inplace=True),
+            nn.Linear(in_features=128, out_features=kwargs["input_shape"]), # Recconstruction of input
 
-    	    nn.ReLU(inplace=True))
+            nn.ReLU(inplace=True))
 
         def forward(self, features):
            reconstructed = self.net(features)
@@ -104,29 +104,29 @@ Now wrap everything in the training function and start training
         for epoch in range(args.epochs):
            loss = 0
            for batch_features, _ in train_loader:
-    	       # reshape mini-batch data to [N, 784] matrix
-    	       # load it to the active device
-    	       batch_features = batch_features.view(-1, 784).cuda(gpu)
+               # reshape mini-batch data to [N, 784] matrix
+               # load it to the active device
+               batch_features = batch_features.view(-1, 784).cuda(gpu)
 
-    	       # reset the gradients back to zero
-    	       # PyTorch accumulates gradients on subsequent backward passes
-    	       optimizer.zero_grad()
+               # reset the gradients back to zero
+               # PyTorch accumulates gradients on subsequent backward passes
+               optimizer.zero_grad()
 
-    	       # compute reconstructions
-    	       outputs = model(batch_features)
+               # compute reconstructions
+               outputs = model(batch_features)
 
-    	       # compute training reconstruction loss
-    	       train_loss = criterion(outputs, batch_features)
+               # compute training reconstruction loss
+               train_loss = criterion(outputs, batch_features)
 
-    	       # compute accumulated gradients
-    	       train_loss.backward()
-    	       # pe-rform parameter update based on current gradients
-    	       optimizer.step()
+               # compute accumulated gradients
+               train_loss.backward()
+               # pe-rform parameter update based on current gradients
+               optimizer.step()
 
-    	       # add the mini-batch training loss to epoch loss
-    	       loss += train_loss.item()
+               # add the mini-batch training loss to epoch loss
+               loss += train_loss.item()
 
-    	       # compute the epoch training loss
+               # compute the epoch training loss
            loss = loss / len(train_loader)
 
            # display the epoch training loss
@@ -137,10 +137,10 @@ Now lets finish this code with a `main()` function that calls the train function
     def main():
          parser = ArgumentParser()
          parser.add_argument('--ngpus', default=1, type=int,
-    			 help='number of gpus per node')
+                 help='number of gpus per node')
 
          parser.add_argument('--epochs', default=2, type=int, metavar='N',
-    			 help='number of total epochs to run')
+                 help='number of total epochs to run')
          args = parser.parse_args()
          train(0, args)
 
@@ -150,7 +150,7 @@ Now lets finish this code with a `main()` function that calls the train function
 ```
 <a id="org65dc2d5"></a>
 
-# Setting up the same model with DistributedDataparallel
+# Setting up the same model with DistributedDataParallel
 
 With the multiprocessing, we will run our training script in each node separately and ask PyTorch to handle the synchronisation between them. It makes sure that in each iteration, the same network weights are present in every node but use different data for the forward pass. Then the gradients are accumulated from every node to calculate the change in weights which will be sent to each node for the update. In short, the same network operates on different data in different nodes in parallel to make things faster. To let this internal communication happen between the nodes, we need few information to setup the DistributedParallel environment such as 1. how many nodes we are using, 2. what is the ip-address of the master node and 3. The number of gpus in a single node. I have changed the order of the above code to make it more understandable. We will first start from the `main` function by defining all the necessary variables.
 
@@ -176,7 +176,7 @@ With the multiprocessing, we will run our training script in each node separatel
         parser.add_argument("--checkpoint", default=None, help="path to checkpoint to restore")
         parser.add_argument('--ngpus', default=1, type=int, help='number of gpus per node')
         parser.add_argument('--epochs', default=2, type=int, metavar='N',
-    			help='number of total epochs to run')
+                help='number of total epochs to run')
 
         args = parser.parse_args()
         args.world_size = args.ngpu * args.nodes   # Total number of gpus availabe to us.
@@ -201,19 +201,19 @@ Now lets define the function `train` that can handle these multiple processes.
         print('gpu:',gpu)
         rank = args.local_ranks * args.ngpus + gpu  # rank calculation for each process per gpu so that they can be identified uniquely.
         print('rank:',rank)
-     	 # Boilerplate code to initialize the parallel prccess. It looks for ip-address and port which we
-		 # have set as environ variable. If you don't want to set it in the main then you can pass it by
-		 # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
-		 # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
+          # Boilerplate code to initialize the parallel prccess. It looks for ip-address and port which we
+         # have set as environ variable. If you don't want to set it in the main then you can pass it by
+         # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
+         # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
 
         dist.init_process_group(backend='nccl',
-    			    init_method='env://',
-    			    world_size=args.world_size,
-    			    rank=rank
-    			    )
+                    init_method='env://',
+                    world_size=args.world_size,
+                    rank=rank
+                    )
         torch.manual_seed(0)
-		# start from the same randomness in different nodes. If you don't set it then networks can have different weights in different
-    	# nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
+        # start from the same randomness in different nodes. If you don't set it then networks can have different weights in different
+        # nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
         torch.cuda.set_device(args.gpu) # set the gpu for each processes
 
 
@@ -221,43 +221,43 @@ Now lets define the function `train` that can handle these multiple processes.
 
         train_dataset = torchvision.datasets.MNIST(root="~/mnist_dataset", train=True, transform=transform, download=True)
         train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas=args.world_size, rank=rank)
-		# Ensures that each process gets differnt data from the batch.
+        # Ensures that each process gets differnt data from the batch.
 
         train_loader = torch.utils.data.DataLoader(train_dataset,
-    						       batch_size=int(128/args.ngpus), # calculate the batch size for each process in the node.
-    						       shuffle=(train_sampler
-    								is None),
-    						       num_workers=4,
-    						       pin_memory=True,
-    						       sampler=train_sampler)
+                                   batch_size=int(128/args.ngpus), # calculate the batch size for each process in the node.
+                                   shuffle=(train_sampler
+                                    is None),
+                                   num_workers=4,
+                                   pin_memory=True,
+                                   sampler=train_sampler)
 ```
 
 -   As we are going to submit the training script to each node separately, we need to set a random seed to fix the randomness involved in the code. For example, in the very first iteration the network weights will start from the same random weights (seed=0) in the different nodes. Then PyTorch will handle the synchronisation and at the end of training, we will have the same network weights in each node.
 -   `train_sampler`, `manual_seed` and `modified batch size in the dataloader` are important steps to remember while setting this up.
 
 ``` python
-Finally, wrap the model as DistributedDataparallel and start the training.
+Finally, wrap the model as DistributedDataParallel and start the training.
 
     def train(gpu, args):
 
         args.gpu = gpu
         print('gpu:',gpu)
         rank = args.local_ranks * args.ngpus + gpu
-		# rank calculation for each process per gpu so that they can be identified uniquely.
+        # rank calculation for each process per gpu so that they can be identified uniquely.
         print('rank:',rank)
         # Boilerplate code to initialise the parallel process. It looks for ip-address and port which we
-    	# have set as environ variable. If you don't want to set it in the main then you can pass it by
-    	# replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
-    	# information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
+        # have set as environ variable. If you don't want to set it in the main then you can pass it by
+        # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
+        # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
 
         dist.init_process_group(backend='nccl',
-    			    init_method='env://',
-    			    world_size=args.world_size,
-    			    rank=rank
-    			    )
+                    init_method='env://',
+                    world_size=args.world_size,
+                    rank=rank
+                    )
         torch.manual_seed(0)
-		# start from the same randomness in different nodes. If you don't set it then networks can have different weights in different
-    	# nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
+        # start from the same randomness in different nodes. If you don't set it then networks can have different weights in different
+        # nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
         torch.cuda.set_device(args.gpu) # set the gpu for each processes
 
 
@@ -265,15 +265,15 @@ Finally, wrap the model as DistributedDataparallel and start the training.
 
         train_dataset = torchvision.datasets.MNIST(root="./mnist_dataset", train=True, transform=transform, download=True)
         train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, num_replicas=args.world_size, rank=rank)
-		# Ensures that each process gets differnt data from the batch.
+        # Ensures that each process gets differnt data from the batch.
 
         train_loader = torch.utils.data.DataLoader(train_dataset,
-    						       batch_size=int(128/args.ngpus), # calculate the batch size for each process in the node.
-    						       shuffle=(train_sampler
-    								is None),
-    						       num_workers=4,
-    						       pin_memory=True,
-    						       sampler=train_sampler)
+                                   batch_size=int(128/args.ngpus), # calculate the batch size for each process in the node.
+                                   shuffle=(train_sampler
+                                    is None),
+                                   num_workers=4,
+                                   pin_memory=True,
+                                   sampler=train_sampler)
 
 
         # load the model to the specified device, gpu-0 in our case
@@ -286,41 +286,41 @@ Finally, wrap the model as DistributedDataparallel and start the training.
         criterion = nn.MSELoss()
 
         for epoch in range(args.epochs):
-    	loss = 0
-    	for batch_features, _ in train_loader:
-    	    # reshape mini-batch data to [N, 784] matrix
-    	    # load it to the active device
-    	    batch_features = batch_features.view(-1, 784).cuda(args.gpus)
+        loss = 0
+        for batch_features, _ in train_loader:
+            # reshape mini-batch data to [N, 784] matrix
+            # load it to the active device
+            batch_features = batch_features.view(-1, 784).cuda(args.gpus)
 
-    	    # reset the gradients back to zero
-    	    # PyTorch accumulates gradients on subsequent backward passes
-    	    optimizer.zero_grad()
+            # reset the gradients back to zero
+            # PyTorch accumulates gradients on subsequent backward passes
+            optimizer.zero_grad()
 
-    	    # compute reconstructions
-    	    outputs = model(batch_features)
+            # compute reconstructions
+            outputs = model(batch_features)
 
-    	    # compute training reconstruction loss
-    	    train_loss = criterion(outputs, batch_features)
+            # compute training reconstruction loss
+            train_loss = criterion(outputs, batch_features)
 
-    	    # compute accumulated gradients
-    	    train_loss.backward()
+            # compute accumulated gradients
+            train_loss.backward()
 
-    	    # perform parameter update based on current gradients
-    	    optimizer.step()
+            # perform parameter update based on current gradients
+            optimizer.step()
 
-    	    # add the mini-batch training loss to epoch loss
-    	    loss += train_loss.item()
+            # add the mini-batch training loss to epoch loss
+            loss += train_loss.item()
 
-    	# compute the epoch training loss
-    	loss = loss / len(train_loader)
+        # compute the epoch training loss
+        loss = loss / len(train_loader)
 
-    	# display the epoch training loss
-    	print("epoch : {}/{}, loss = {:.6f}".format(epoch + 1, args.epochs, loss))
-    	if rank == 0:
-    	   torch.save({'state_dict': model.state_dict(),
-    		       'optimizer': optimizer.state_dict(),
-    		       'epoch': args.epochs,
-    		       }, "./model.pth")
+        # display the epoch training loss
+        print("epoch : {}/{}, loss = {:.6f}".format(epoch + 1, args.epochs, loss))
+        if rank == 0:
+           torch.save({'state_dict': model.state_dict(),
+                   'optimizer': optimizer.state_dict(),
+                   'epoch': args.epochs,
+                   }, "./model.pth")
 ```
 
 -   Save the model only when the rank is zero because all the models are the same. We only need to save one copy of the model. If we are not careful here then all
@@ -333,7 +333,7 @@ Save the script as `train.py` in the CSC or Narvi server and submit an interacti
 
 <a id="org74190c5"></a>
 
-# DistributedDataparallel as a Batch job in the servers
+# DistributedDataParallel as a Batch job in the servers
 
 When we are submitting the interactive jobs, we know the exact node name and can obtain the ip-address for that beforehand. However, in the batch job, it needs to be programmed to automate most of the stuff. We have to make minimum changes to the existing code and write a `.sh` script to submit the job. Our `train.py` script are modified only in the first few lines of the `train()` function as follows
 
@@ -346,18 +346,18 @@ When we are submitting the interactive jobs, we know the exact node name and can
         rank = int(os.environ.get("SLURM_NODEID")) * args.ngpus + gpu  # rank calculation for each process per gpu so that they can be identified uniquely.
         print('rank:',rank)
         # Boilerplate code to initialise the parallel process. It looks for ip-address and port which we
-    	# have set as environ variable. If you don't want to set it in the main then you can pass it by
-    	# replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
-    	# information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
+        # have set as environ variable. If you don't want to set it in the main then you can pass it by
+        # replacing the init_method as ='tcp://<ip-address>:<port>' after the backend. More useful
+        # information can be found in https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html
 
-	    dist.init_process_group(backend='nccl',
-    			    init_method='env://',
-    			    world_size=args.world_size,
-    			    rank=rank
-    			    )
+        dist.init_process_group(backend='nccl',
+                    init_method='env://',
+                    world_size=args.world_size,
+                    rank=rank
+                    )
         torch.manual_seed(0)
-		# start from the same randomness in different nodes. If you don't set it then networks can have differnt weights in different
-    	# nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
+        # start from the same randomness in different nodes. If you don't set it then networks can have differnt weights in different
+        # nodes when the training starts. We want exact copy of same network in all the nodes. Then it will progress form there.
         torch.cuda.set_device(args.gpu) # set the gpu for each processes
 ```
 
@@ -410,13 +410,13 @@ Keeping everything else in the code same, now lets write the batch script for CS
 ``` python
         for state in optimizer.state.values():
             for k, v in state.items():
-        	if isinstance(v, torch.Tensor):
-        	    state[k] = v.cuda(gpus)
+            if isinstance(v, torch.Tensor):
+                state[k] = v.cuda(gpus)
 ```
 
 -   To run on a single node with multiple gpus, just make the `--nodes=1` in the batch script.
 -   If you Batchnorm\*d inside the network then you may consider replacing them with `sync-batchnorm` to have better batch statistics while using
-    Distributeddataparallel.
+    DistributedDataParallel.
 -   Use this feature when it is required to optimise the gpu usage.
 
 
@@ -424,4 +424,4 @@ Keeping everything else in the code same, now lets write the batch script for CS
 
 # Acknowledgements
 
-I found this [article](https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html) really helpful when I was setting up my Distributeddataparallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things. If you have any suggestions then reach me at `soumya.tripathy@tuni.fi`.
+I found this [article](https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html) really helpful when I was setting up my DistributedDataParallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things. If you have any suggestions then reach me at `soumya.tripathy@tuni.fi`.
