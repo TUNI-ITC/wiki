@@ -176,10 +176,7 @@ if __name__ == '__main__':
 
 With the multiprocessing, we will run our training script in each node separately and ask PyTorch to handle the synchronisation between them. It makes sure that in each iteration, the same network weights are present in every node but use different data for the forward pass. Then the gradients are accumulated from every node to calculate the change in weights which will be sent to each node for the update. In short, the same network operates on different data in different nodes in parallel to make things faster. To let this internal communication happen between the nodes, we need few information to setup the DistributedParallel environment such as 1. how many nodes we are using, 2. what is the ip-address of the master node and 3. The number of gpus in a single node. I have changed the order of the above code to make it more understandable. We will first start from the `main` function by defining all the necessary variables.
 
--   A single node can be understood as a single computer with its own gpus and cpus. Here we need multiple of such computers. One thing to remember is that these
-    nodes should be connected to each other. In the servers, they are always connected to each other so we can use it without any problems. In the script,
-    we need to mention the ip-address and port of one of the nodes (we call it the master node) so that all other nodes can be connected to that automatically
-    when we start the script in those nodes.
+-   A single node can be understood as a single computer with its own gpus and cpus. Here we need multiple of such computers. One thing to remember is that these nodes should be connected to each other. In the servers, they are always connected to each other so we can use it without any problems. In the script, we need to mention the ip-address and port of one of the nodes (we call it the master node) so that all other nodes can be connected to that automatically when we start the script in those nodes.
 
 ``` python
 import torch
@@ -217,9 +214,7 @@ if __name__ == "__main__":
     mp.spawn(train, nprocs=args.ngpus, args=(args,))
 ```
 
--   You can imagine the `local_rank` as an unique number associated to each node starting from zero to number of nodes-1. We assign zero rank to the node whose
-    ip-address is passed to the `main()` and we start the script first on that node. Further, we are going use this number to calculate one more rank for each gpu
-    in that node.
+-   You can imagine the `local_rank` as an unique number associated to each node starting from zero to number of nodes-1. We assign zero rank to the node whose ip-address is passed to the `main()` and we start the script first on that node. Further, we are going use this number to calculate one more rank for each gpu in that node.
 -   Instead of calling the `train` function once, we spawn `args.ngpus` processes in each node to run `args.ngpus` instances of `train` function in parallel.
 
 Now lets define the function `train` that can handle these multiple processes.
@@ -387,8 +382,7 @@ def train(gpu, args):
             torch.save(dict_model, './model.pth')
 ```
 
--   Save the model only when the rank is zero because all the models are the same. We only need to save one copy of the model. If we are not careful here then all
-    the processes will try to save weights and can corrupt the weights.
+-   Save the model only when the rank is zero because all the models are the same. We only need to save one copy of the model. If we are not careful here then all the processes will try to save weights and can corrupt the weights.
 
 Save the script as `train.py` in the CSC or Narvi server and submit an interactive job with two gpu nodes (Lets quickly test it on `gputest` node as `srun --pty --account=Project_** --nodes=2 -p gputest --gres=gpu:v100:1,nvme:100 -t 00:15:00 --mem-per-cpu=20000 --ntasks-per-node=1 --cpus-per-task=8 /bin/bash -i`). Once it is allocated, ssh to each node in two terminals as `ssh <node name>`) and submit the job by typing `python train.py --ip_adress=**.**.**.** --nodes 2 --local_rank 0 --ngpus 1 --epochs 1` and `python train.py --ip_adress=<same as the first> --nodes 2 --local_rank 1 --ngpus 1 --epochs 1` to each of them respectively. Two job should start with synchronisation and training will begin soon after.
 
@@ -479,10 +473,8 @@ srun python train.py --nodes=2 --ngpus 4 --ip_adress $ip1 --epochs 1
 
 ## Tips and Tricks
 
--   If you have `os.mkdir` inside the script then always wrap it with `try and except`. Multiple processes will try to create a new folder and they will throw
-    errors that the directory already exists.
--   When resuming the network weights if your model complains that the tensors are not on the same advice and points to the optimiser then it is mostly caused
-    by this [optimizer-error](https://github.com/pytorch/pytorch/issues/2830). Just add these few lines after loading the optimizer from the checkpoints.
+-   If you have `os.mkdir` inside the script then always wrap it with `try and except`. Multiple processes will try to create a new folder and they will throw errors that the directory already exists.
+-   When resuming the network weights if your model complains that the tensors are not on the same advice and points to the optimiser then it is mostly caused by this [optimizer-error](https://github.com/pytorch/pytorch/issues/2830). Just add these few lines after loading the optimizer from the checkpoints.
 
 ``` python
 for state in optimizer.state.values():
@@ -492,8 +484,7 @@ for state in optimizer.state.values():
 ```
 
 -   To run on a single node with multiple gpus, just make the `--nodes=1` in the batch script.
--   If you Batchnorm\*d inside the network then you may consider replacing them with `sync-batchnorm` to have better batch statistics while using
-    DistributedDataParallel.
+-   If you Batchnorm\*d inside the network then you may consider replacing them with `sync-batchnorm` to have better batch statistics while using DistributedDataParallel.
 -   Use this feature when it is required to optimise the gpu usage.
 
 
