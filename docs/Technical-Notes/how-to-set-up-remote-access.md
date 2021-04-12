@@ -21,18 +21,19 @@ We assume that you have an Linux desktop (**host**) at your office and you would
 Now your machine (**host**) should be reachable from TUNI-maintained computers connected to `TUNI-STAFF` WiFi or a pre-installed VPN directly via `ssh user@**********.pit.cs.tut.fi`. If you are using a non-university computer, you need to use the ssh-forwarding server (`ssh-forward.tuni.fi`) to reach `pit.cs.tut.fi`. Use the following guide to set up the connection to the forwarding server.
 
 ## How to Set up the **Client** (e.g. your laptop)?
-Even though university-maintained devices can reach `pit.cs.tut.fi` without any proxy, we found that using the proxy on such devices provides a more uniform experience because otherwise you need to keep in mind which network you are using each time you ssh to your machine.
+Even though university-maintained devices can reach `pit.cs.tut.fi` without any proxy from university premises, we found that using the proxy even on university-maintained devices provides a more uniform experience. Otherwise you need to keep in mind which network you are using each time you ssh to your machine and adjust the CLI command accordingly (see the tip in the end of this section on how to configure an `ssh` command to use proxy by default when connecting to a specific device).
 
 1. To connect to your compute machine from a self-maintained/personal device, you need to get access to the ssh-forwarding server `ssh-forward.tuni.fi`. For this, proceed to [id.tuni.fi/idm](https://id.tuni.fi/idm/?uiLang=en) -> `My user rights` -> `Apply for a new user right` -> if required, select your contract -> search for `Linux Servers (LINUX-SERVERS) SSH tunneling service` and select it. In `Application details` put something like `For pit.cs.tut.fi connections`. Then, go to the `Applications` tab and wait until the access is granted (1 min).
-2. `ssh-forward.tuni.fi` is open to the public internet and it requires 2-factor authentication. For this, log in to the forwarding server using your TUNI credentials (`ssh tuni_user@ssh-forward.tuni.fi`) while being connected to one of the University networks (`roam.fi/eduroam/TUNI-STAFF` or a university VPN). Unfortunately, you cannot initialize 2-factor authentication from any other network but the good news is that you need to do it only once. If you cannot go to the campus [we got you here as well](#how-to-initialize-the-two-step-verification-remotely). Once you logged in to `ssh-forward.tuni.fi`, type `google-authenticator`. It will ask you several questions and show a QR code (resize your window to see it). Answer the questions as follows:
+2. `ssh-forward.tuni.fi` is open to the public internet and it requires 2-factor authentication. For this, log in to the forwarding server using your TUNI credentials (`ssh tuni_user@ssh-forward.tuni.fi`) **while being connected to one of the University networks (`roam.fi/eduroam/TUNI-STAFF` or a university VPN). If 2FA was not initialized, it will reject your password. Unfortunately, you cannot initialize 2-factor authentication from any network. You need to be physically at University and be connected to one of the networks there**.
+3. Once you logged in to `ssh-forward.tuni.fi`, type `google-authenticator`. It will ask you several questions and show a QR code (resize your window to see it). Answer the questions as follows:
     - `Do you want authentication tokens to be time-based...` -> y
     - `Do you want me to update your "/home/user/...google_authenticator" file` -> y
     - `Do you want to disallow multiple uses...` -> n
     - `By default, tokens are good for 30 seconds...` -> n
     - `If the computer that you are logging into...` -> y
-3. Once QR code is shown, install some 2-factor authenticator app on your smartphone e.g. from [Microsoft](https://www.microsoft.com/en-us/account/authenticator), [Authy](https://authy.com/), or [Google](https://www.google.com/search?q=Google+Authenticator+apple+android). The app will be used for two-step authentication when you connect from a non-university network is used e.g. your home internet. Once it is done, it will create an entry with a 6-digit passcode which changes every 30 secs.
-4. Test your 2FA by trying to connect to `ssh-forward.tuni.fi` from a non-university network (e.g. using internet shared from your cell-phone) (`ssh your_tuni_username@ssh-forward.tuni.fi`).
-5. Try to connect to your machine, use `ssh -J your_tuni_username@ssh-forward.tuni.fi your_host_username@*********.pit.cs.tut.fi` (`-J` means "jump" using the specified proxy)
+4. Once QR code is shown, install some 2-factor authenticator app on your smartphone e.g. from [Microsoft](https://www.microsoft.com/en-us/account/authenticator), [Authy](https://authy.com/), or [Google](https://www.google.com/search?q=Google+Authenticator+apple+android). The app will be used for two-step authentication when you connect from a non-university network is used e.g. your home internet. Once it is done, it will create an entry with a 6-digit passcode which changes every 30 secs.
+5. Test your 2FA by trying to connect to `ssh-forward.tuni.fi` from a non-university network (e.g. using internet shared from your cell-phone) (`ssh your_tuni_username@ssh-forward.tuni.fi`).
+6. Try to connect to your machine. Use `ssh -J your_tuni_username@ssh-forward.tuni.fi your_host_username@*********.pit.cs.tut.fi` (`-J` means "jump" using the specified proxy)
     - If you are on a University network (`roam.fi/eduroam/TUNI-STAFF` or VPN), it will only ask for your TUNI and host passwords;
     - If you are using a non-University network, it will first ask you for a `Verification code` which is a temporal code from `Google Authenticator` app or any other 2FA app you installed on your smartphone.
 
@@ -45,14 +46,6 @@ Even though university-maintained devices can reach `pit.cs.tut.fi` without any 
       ProxyCommand ssh your-tuni-username@ssh-forward.tuni.fi -W %h:%p
     ```
     After doing this, you will be able to do `ssh connection_name` to `ssh` directly to `*********.pit.cs.tut.fi`, forward ports, and transfer large files using `scp/rsync`. It is also useful if you are using `VSCode` or any other text editor which supports remote development. Additionally, it is handy if you would like to mount folders from the host to your client. You can use `sshfs connection_name:/path/to/remote_folder /path/to/local_folder`.
-
-
-## How to Initialize the Two-step Verification Remotely
-
-!!! warning "`linux-ssh.cc.tut.fi` and `ssh-forward.cc.tut.fi` will be deprecated by February 2021"
-    *`linux-ssh.cc.tut.fi` and `ssh-forward.cc.tut.fi` will be decommissioned during the 2nd week of 2021 and `staff-linux.cc.tut.fi` in February 2021. Therefore, if neither of the three is working for you, try using a VPN or go to the university and initialize authentication from roam.fi/eduroam/otherWiFi. You may also ask a colleague-friend to do it for you if they have an access/vpn/at-uni.*
-
-If you are setting up your connection remotely and you don't have an access to the university networks nor VPN at the moment, you still can do it. For this, you may use the old ssh-server if it still works for you (`ssh-forward.cc.tut.fi`), otherwise you will need to apply for another service. Proceed to [tut.fi/omatunnus](https://www.tut.fi/omatunnus) (yes, `tut` not `tuni`) -> `Services` -> `System Access` (wait 10 sec) -> search for `linux-ssh.cc.tut.fi` or `staff-linux.cc.tut.fi` depending on whether your are a student or a staff. When the access is granted (5 mins), `ssh` to one of them, and from there `ssh` to `ssh-forward.tuni.fi` -- no verification code will be asked as these servers are in the university network. Then, proceed with the initialization of the two-factor auth.
 
 ## Known Issues
 
