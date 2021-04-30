@@ -1,0 +1,787 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>TUNI Narvi Cluster - Tampere University ITC Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#7e56c2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tuni-narvi-cluster" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-header__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tampere University ITC Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TUNI Narvi Cluster
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-nav__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Tampere University ITC Wiki
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Welcome
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Meta
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Meta" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Meta
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Meta/how-to-contribute/" class="md-nav__link">
+        How to Contribute to This Wiki?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Technical Notes
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Technical Notes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Technical Notes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Distributed_dataparallel_pytorch/" class="md-nav__link">
+        Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-set-up-remote-access/" class="md-nav__link">
+        How to Set up Remote Access
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-tuni-vpn/" class="md-nav__link">
+        Install TUNI VPN
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          TUNI Narvi Cluster
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        TUNI Narvi Cluster
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-get-an-account" class="md-nav__link">
+    How to Get an Account?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-check-the-queue" class="md-nav__link">
+    How to Check the Queue
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-run-a-job" class="md-nav__link">
+    How to Run a Job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-cancel-my-job" class="md-nav__link">
+    How to Cancel My Job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-transfer-data" class="md-nav__link">
+    How to Transfer Data?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-i-install-my-software" class="md-nav__link">
+    How Do I Install My Software
+  </a>
+  
+    <nav class="md-nav" aria-label="How Do I Install My Software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-conda-environment" class="md-nav__link">
+    Creating a conda Environment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version_control/" class="md-nav__link">
+        Version Control
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        University Bureaucracy
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="University Bureaucracy" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          University Bureaucracy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/cs_curricula/" class="md-nav__link">
+        Computing Sciences Curricula
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/employee/" class="md-nav__link">
+        Make a work contract request
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/phd_thesis/" class="md-nav__link">
+        PhD Thesis
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-get-an-account" class="md-nav__link">
+    How to Get an Account?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-check-the-queue" class="md-nav__link">
+    How to Check the Queue
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-run-a-job" class="md-nav__link">
+    How to Run a Job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-cancel-my-job" class="md-nav__link">
+    How to Cancel My Job
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-transfer-data" class="md-nav__link">
+    How to Transfer Data?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-i-install-my-software" class="md-nav__link">
+    How Do I Install My Software
+  </a>
+  
+    <nav class="md-nav" aria-label="How Do I Install My Software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-conda-environment" class="md-nav__link">
+    Creating a conda Environment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="tuni-narvi-cluster">TUNI Narvi Cluster</h1>
+<p><em>This amazing guide was originally posed in <a href="https://wiki.eduuni.fi/">wiki.eduuni.fi</a> and composed by Heikki Huttunen. We obtained his permission to use it here. It was modernized and expanded since then.</em></p>
+<p>This document describes how to use the <code>TUNI TCSC Narvi</code> computing cluster.</p>
+<div class="admonition question">
+<p class="admonition-title">What is Narvi?</p>
+<ul>
+<li>Narvi is the SLURM cluster that substituted the old merope cluster in 2017.</li>
+<li>The cluster is used by researchers, faculty members, and students at Tampere University.</li>
+<li>There are 140 CPU-only nodes with 3000+ CPU cores</li>
+<li>Also Narvi has 22 nodes with different GPU nodes with 4 GPUs in each. Specifically, there are<ul>
+<li>6 nodes with Tesla V100 32 GB and 4 with Tesla V100 16 GB</li>
+<li>2 nodes with Tesla P100 16 GB and 6 with Tesla P100 12 GB</li>
+<li>4 nodes with Tesla K80 12 GB</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="how-to-get-an-account">How to Get an Account?</h2>
+<ol>
+<li>Go to <a href="https://id.tuni.fi/">id.tuni.fi</a></li>
+<li>Choose <code>Identity management</code> → <code>My user rights</code> → <code>Apply for a new user right</code></li>
+<li>Choose the correct contract (studen/staff).<ul>
+<li>If you fill the application as a student also tell the Course name and the responsible teacher</li>
+</ul>
+</li>
+<li>Search for <code>Linux Servers (LINUX-SERVERS) TCSC HPC Cluster</code></li>
+<li>In the form, enter application details: <code>I need Narvi account. My supervisor is X.</code>.</li>
+<li>Your supervisor will receive an acceptance link and you will be granted a new account.</li>
+<li>In a few days, you will receive an email from TCSC telling you to send an ssh public key to them. Create a key pair (see below or just google for it) and send the <em>public</em> one to them.</li>
+<li>Soon you will be able to login to the front end <code>narvi.tut.fi</code> using <code>ssh</code>.</li>
+</ol>
+<details class="question"><summary>How to generate an <code>ssh</code> key-pair 🔐?</summary><p>Here is how to do it on Linux and Mac systems. The instructions for Windows can be easily found on google.
+<div class="highlight"><pre><span></span><code>ssh-keygen -f ~/.ssh/narvi_key
+</code></pre></div>
+The command will ask for a new password which will be asked when this key is used. After, the script will save two keys (<code>narvi_key</code> and <code>narvi_key.pub</code>) in <code>~/.ssh/</code> folder. <code>*.pub</code> is the public key.</p>
+<p>The first time you will use this key with <code>ssh</code> it may complain about permissions (<code>Permissions are too open.</code>). If so, you will need to change the permissions of the private key
+<div class="highlight"><pre><span></span><code>chmod <span class="m">600</span> ~/.ssh/narvi_key
+</code></pre></div></p>
+</details>
+<details class="question"><summary>I don't see any GPU partitions</summary><p>Please write an e-mail to the admin (<code>tcsc.tau@tuni.fi</code>) asking to add you to the GPU group. By default, you will only have access to CPU-only nodes.</p>
+</details>
+<h2 id="how-to-check-the-queue">How to Check the Queue</h2>
+<p>To see the status of the queue, type
+<div class="highlight"><pre><span></span><code>squeue
+<span class="c1"># for a specific partitions (e.g. `normal` or `gpu`).</span>
+squeue -p gpu
+<span class="c1"># for a specific user</span>
+squeue -u &lt;user&gt;
+</code></pre></div></p>
+<h2 id="how-to-run-a-job">How to Run a Job</h2>
+<p><em>Remember: do not use the login node for computation – it is slow and will degrade the performance of the login node for other users!</em></p>
+<p>There are two common ways to run a job at a <code>slurm</code> cluster:</p>
+<ul>
+<li><code>srun</code></li>
+<li><code>sbatch</code></li>
+</ul>
+<p>The main difference is that <code>srun</code> is interactive which means the terminal will be attached to the current session. The experience is just like with any other command in your terminal. Note, that when the queue is full you will have to wait until you get resources.</p>
+<p>If you use <code>sbatch</code>, you submit your job to the slurm queue and get your terminal back; you can disconnect, kill your terminal, etc. with no consequence. In the case of <code>srun</code>, killing the terminal would kill the job. Hence, <code>sbatch</code> is recommended.</p>
+<p>Here is the example <code>srun</code> command which will ask the cluster to start an interactive shell with 1 GPU (<code>--gres</code>) and 10 CPUs (<code>--cpus-per-task</code>), 10 GB of RAM (<code>--mem-per-cpu</code>) that will be available to you for 30 minutes (<code>--time</code>):
+<div class="highlight"><pre><span></span><code>srun \
+    --pty \
+    --job-name pepe_run \
+    --partition gpu \
+    --gres gpu:1 \
+    --mem-per-cpu 1G \
+    --ntasks 1 \
+    --cpus-per-task 10 \
+    --time 00:30:00 \
+    /bin/bash -i
+</code></pre></div></p>
+<p>and this is an example <code>sbatch</code> command which will ask the cluster to run <code>my_script.sh</code> with 1 GPU and 10 CPUs, 10 GB of RAM that will run for at most 30 minutes (if the script has finished execution the job will be ended), the output and error logs will be saved to <code>log_JOBID.txt</code> (<code>--output</code>, <code>--error</code>):
+<div class="highlight"><pre><span></span><code>sbatch \
+    --job-name pepe_run \
+    --partition gpu \
+    --gres gpu:1 \
+    --mem-per-cpu 1g \
+    --ntasks 1 \
+    --cpus-per-task 10 \
+    --time 00:30:00 \
+    --output log_%j.txt \
+    --error log_%j.txt \
+    my_script.sh
+</code></pre></div>
+you may also use <code>--constraint='kepler|pascal|volta'</code> in order to select a specific gpu architecture.</p>
+<p>Instead of specifying the resources and other information as command-line arguments, you may find it useful to list them inside of <code>my_script.sh</code> and then just use <code>sbatch my_script.sh</code>:
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+#SBATCH --job-name=pepe_run
+#SBATCH --gres=gpu:1
+#SBATCH --time=00:30:00
+# and so on. To comment SBATCH entry use `##SBATCH --arg ...`
+# here starts your script
+</code></pre></div></p>
+<p>To learn more <code>sbatch</code> hacks, a reader is also referred to <a href="https://narvi-docs.readthedocs.io/narvi/tut/gpu.html">this nice tutorial</a>.</p>
+<h2 id="how-to-cancel-my-job">How to Cancel My Job</h2>
+<p>To cancel a specific job you are running, use
+<div class="highlight"><pre><span></span><code>scancel &lt;JobID&gt;
+</code></pre></div></p>
+<h2 id="how-to-transfer-data">How to Transfer Data?</h2>
+<p>The simplest way is to use <code>scp</code> command
+<div class="highlight"><pre><span></span><code>scp -i ~/.ssh/narvi_key -r ./folder user@narvi.tut.fi:/narvi/path/
+</code></pre></div>
+where <code>-r</code> means to copy the folder with all files in it.</p>
+<p>However, once the internet connection is interrupted you will need to start all over again. To have an opportunity to resume the data transfer try <code>rsync</code> instead
+<div class="highlight"><pre><span></span><code>rsync -ahP -e <span class="s2">&quot;ssh -i ~/.ssh/narvi_key&quot;</span> ./folder user@narvi.tut.fi:/narvi/path/
+</code></pre></div>
+where <code>-ah</code> means to preserve permissions symlinks, etc as in the original folder and <code>h</code> makes the progress "human-readable", and <code>P</code> allows to continue data transfer (sends missing files on the target path 🤓).</p>
+<div class="admonition warning">
+<p class="admonition-title">Trailing <code>/</code> in <code>rsync</code> makes the difference</p>
+<ul>
+<li><code>rsync /dir1/dir2/ /home/dir3</code> - copies the contents of <code>/dir1/dir2</code> but not the <code>dir2</code> folder itself.</li>
+<li><code>rsync /dir1/dir2 /home/dir3</code> – copies the folder <code>dir2</code> along with all its contents.</li>
+</ul>
+</div>
+<p>If you would like to see the files from a remote machine you may mount the folder locally. On Ubuntu/Debian install <code>sshfs</code> and run this
+<div class="highlight"><pre><span></span><code>mkdir narvi_folder
+sshfs -o <span class="nv">IdentityFile</span><span class="o">=</span>~/.ssh/narvi_key user@narvi.tut.fi:/narvi/folder/ ./narvi_folder
+</code></pre></div>
+the content of the <code>/narvi/folder</code> will be shown in <code>./narvi_folder</code>. Mind that the changes in either folder will be reflected in another one.</p>
+<p>To unmount the folder use
+<div class="highlight"><pre><span></span><code>umount ./narvi_folder
+</code></pre></div></p>
+<h2 id="how-do-i-install-my-software">How Do I Install My Software</h2>
+<p>Before you do so, check if the software you would like to install is already installed by the admin (e.g. matlab, cuda, and gcc). These are set up using <code>module</code> functionality. You can load a module by specifying <code>module load &lt;mod&gt;</code> inside of your script. To see all available modules run <code>module avail</code>.</p>
+<p>If you are not satisfied with the selection you can install your own. Here we will focus on <code>Python</code> packages and virtual environment manager <code>conda</code> which is already installed on Narvi (try: <code>which conda</code>).</p>
+<div class="admonition tip">
+<p class="admonition-title"><code>conda</code> Has Many Linux Tools</p>
+<p>Besides a ton of <code>Python</code> packages, <code>conda</code> has surprisingly many common Linux tools, e.g. <code>tmux</code>, <code>htop</code>, <code>ffmpeg</code>, <code>vim</code>, and more. This is especially useful if you would like to install them but do not have <code>sudo</code> rights.</p>
+</div>
+<h3 id="creating-a-conda-environment">Creating a <code>conda</code> Environment</h3>
+<p>Let's start by creating an empty conda environment
+<div class="highlight"><pre><span></span><code>conda create --name my_env
+</code></pre></div></p>
+<p>Activate it (meaning that all binaries installed in this environment will be used instead of the system-wise packages)
+<div class="highlight"><pre><span></span><code>conda activate my_env
+<span class="c1"># if it didn&#39;t work try `source activate my_env`</span>
+</code></pre></div></p>
+<p>Afterward, you can install <code>conda</code> packages
+<div class="highlight"><pre><span></span><code>conda install python pip matplotlib scikit-learn
+</code></pre></div></p>
+<p>If default <code>conda</code> channels don't have some package you search for other <code>conda</code> channels:
+<div class="highlight"><pre><span></span><code>conda install dlib --channel<span class="o">=</span>menpo
+</code></pre></div></p>
+<p>If your favorite package is not available anywhere in <code>conda</code> <em>OR you would like to install <code>OpenCV</code></em>, try to install it via <code>pip</code>:
+<div class="highlight"><pre><span></span><code><span class="c1"># check if you are using the `pip` from your `conda` env</span>
+which pip
+pip install opencv-python
+</code></pre></div></p>
+<details class="question"><summary><code>conda</code> vs <code>pip</code> inside of <code>conda</code> env?</summary><p>According to <a href="https://www.anaconda.com/blog/using-pip-in-a-conda-environment">official anaconda documentation</a>, you should install as many requirements as possible with <code>conda</code>, then use <code>pip</code>.
+Another problem with <code>pip</code> packages inside of <code>conda</code> is associated with poor dependence handling and just bad experience when trying to replicate the same environment on another machine.</p>
+</details>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../install-tuni-vpn/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Install TUNI VPN
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../version_control/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Version Control
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+    
+  </body>
+</html>
