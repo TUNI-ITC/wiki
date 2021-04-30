@@ -1,4 +1,4 @@
-# Distributed data parallel training using PyTorch on the multiple nodes of CSC and Narvi clusters
+# Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
 
 ## Table of Contents
 
