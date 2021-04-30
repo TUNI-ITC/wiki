@@ -14,6 +14,8 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 - [How to install TUNI VPN](Technical-Notes/install-tuni-vpn.md)
 - [TUNI Narvi Cluster](Technical-Notes/tuni-narvi-cluster.md)
 - [Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi](Technical-Notes/Distributed_dataparallel_pytorch.md)
+- [Version control](Technical-Notes/version_control.md)
+
 ## Meta
 - [How to contrubute to the Wiki](Meta/how-to-contribute.md)
 
