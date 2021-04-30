@@ -442,10 +442,10 @@ module load gcc/8.3.0 cuda/10.1.168
 source <virtual environment name>
 
 # if some error happens in the initialation of parallel process then you can
-# get the debug info.
-export NCCL_DEBUG=INFO
+# get the debug info. This can easily increase the size of out.txt.
+export NCCL_DEBUG=INFO  # comment it if you are not debugging distributed parallel setup
 
-export NCCL_DEBUG_SUBSYS=ALL
+export NCCL_DEBUG_SUBSYS=ALL # comment it if you are not debugging distributed parallel setup
 
 # find the ip-address of one of the node. Treat it as master
 ip1=`hostname -I | awk '{print $2}'`
@@ -460,7 +460,10 @@ echo "r$SLURM_NODEID Launching python script"
 
 srun python train.py --nodes=2 --ngpus 4 --ip_adress $ip1 --epochs 1
 ```
-
+!!! warning "To Narvi users"
+	Change the ip1=`hostname -I | awk '{print $2}'` line to ip1=`hostname -I | awk '{print $1}'` to correctly parse the ip address.
+!!! warning "To Mahti users"
+	For now add `export NCCL_IB_DISABLE=1` to the batch script to prevent the occasional hang in the training loop. However, I am not sure whether this is happening becasue of Mahti or Pytorch 1.8.
 ## Tips and Tricks
 
 -   If you have `os.mkdir` inside the script then always wrap it with `try and except`. Multiple processes will try to create a new folder and they will throw errors that the directory already exists.
