@@ -6,6 +6,7 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 
 ## University Bureaucracy
 - [Contracts and salary](University-Bureaucracy/employee.md)
+- [MSc thesis](University-Bureaucracy/msc_thesis.md)
 - [PhD thesis](University-Bureaucracy/phd_thesis.md)
 - [CS Curricula](University-Bureaucracy/cs_curricula.md)
 
