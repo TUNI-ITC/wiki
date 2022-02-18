@@ -17,7 +17,14 @@ This is the most challenging part, but don't worry, your supervisor will tell yo
 
 **Input:** Sufficient amount of scientific contributions, typically in the terms of the articles from the previous stage.
 
-It is difficult to tell a generic rule when you're reaady to start writing your thesis as that varies a lot between the fields, even between fields close to each other. You should discuss with your supervisor each year what is the stage of your PhD studies and she/he certainly tells you when it is time to start writing.
+It is difficult to tell a generic rule when you're ready to start writing your thesis as that varies a lot between the fields, even between fields close to each other. You should discuss with your supervisor each year what is the stage of your PhD studies and she/he certainly tells you when it is time to start writing.
+
+There are
+[recommendations](https://content-webapi.tuni.fi/proxy/public/2019-08/opas_dpcee_vaitoskirjasuositukset1_en_0.pdf)
+for PhD thesis from DPCEE.
+It is worth to read through and perhaps adopt their structure, but of course you should follow
+practices in your field and discuss with your supervisor.
+However, it seems that the committee provides a lot of feedback if you do not follow these recommendations.
 
 Before writing you need a suitable template. Vast majority of people prefer Latex as it is just so convenient for writing scientific text.
 
