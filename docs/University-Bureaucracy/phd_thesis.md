@@ -1,6 +1,18 @@
 # PhD Thesis
 So, you decided that doing a PhD thesis is good for your future. Along the long and winding road you may find the following instructions useful.
 
+## Stage 0 - Find supervisor and apply for doctoral studies (year 0)
+
+You must be absolutely sure that you want a PhD degree since it means four years of super heavy work under (possibly) monstrous supervisor. On the positive side, you will learn how to make science and that opens the door to the academic career. In addition, many R&D labs of big companies appreciate PhD degree from thei employees.
+
+In order to apply you need to fill and submit a number of super boring bureaucratic forms that insist your commitment and also commitment from your main supervisor (make sure you found a good one):
+
+ - [Forms to be submitted for doctoral studies](https://intra.tuni.fi/en/studying/doctoral-studies/forms-doctoral-students)
+
+Before applying send an email to doctoral studies office and ask for the list of things to be submitted and a link to the electronic application system.
+
+Welcome, you just started your jorney toward magic of science.
+
 ## Stage 1 - Do research (years 1-4)
 
 **Input:** 1) you, 2) your supervisor, and 3) funding for your salary and research.
