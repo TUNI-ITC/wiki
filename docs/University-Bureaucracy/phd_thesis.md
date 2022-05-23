@@ -3,7 +3,7 @@ So, you decided that doing a PhD thesis is good for your future. Along the long 
 
 ## Stage 0 - Find supervisor and apply for doctoral studies (year 0)
 
-You must be absolutely sure that you want a PhD degree since it means four years of super heavy work under (possibly) monstrous supervisor. On the positive side, you will learn how to make science and that opens the door to the academic career. In addition, many R&D labs of big companies appreciate PhD degree from thei employees.
+You must be absolutely sure that you want a PhD degree since it means four years of super heavy work under (possibly) monstrous supervisor. On the positive side, you will learn how to make science and that opens the door to the academic career. In addition, many R&D labs of big companies appreciate PhD degree from their employees.
 
 In order to apply you need to fill and submit a number of super boring bureaucratic forms that insist your commitment and also commitment from your main supervisor (make sure you found a good one):
 
