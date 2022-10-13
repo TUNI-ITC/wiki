@@ -45,9 +45,14 @@ Check out this Latex template: [MSc thesis template (Latex)](https://github.com/
 
 Examples of great theses (although your main supervisor may have different examples so ask him/her):
 
-- Lauri Suomela: [trepolink](https://urn.fi/URN:NBN:fi:tuni-202104263640)
-- Atakan Dag: [trepolink](https://urn.fi/URN:NBN:fi:tuni-202104142975)
-- Eero Heinänen: [trepolink](https://urn.fi/URN:NBN:fi:tty-201810242459)
+- Valtteri Kaatrasalo (2022): [Computer vision methods for augmented reality](https://urn.fi/URN:NBN:fi:tuni-202204042972)
+- Leevi Raivio (2021): [Visual metric-semantic 3D reconstruction](https://urn.fi/URN:NBN:fi:tuni-202105175105)
+- Lauri Suomela (2021): [Implementing HR analytics: Premises for value creating analytics](https://urn.fi/URN:NBN:fi:tuni-202104263640)
+- Atakan Dag (2021): [Comparison of monolithic and hybrid controllers for multi-objective sim-to-real learning](https://urn.fi/URN:NBN:fi:tuni-202104142975)
+- Eero Heinänen (2018): [A Method for automatic tuning of PID controller following Luus-Jaakola optimization](https://urn.fi/URN:NBN:fi:tty-201810242459)
+- Matti Tuhola (2018): [English Lexical Stress Recognition Using Recurrent Neural Networks](https://urn.fi/URN:NBN:fi:tuni-201909303608)
+- Giambattista Parascandolo (2015): [Recurrent neural networks for polyphonic sound event detection](https://urn.fi/URN:NBN:fi:tty-201511241773)
+
 
 **Actions:** You must attend the MSc thesis seminar course of you major. The seminar typically includes: 1) watching MSc presentations by others, 2) presenting your work (at least once, agree this with your supervisor); in CS the presentations are available in [budjetti.cs.tut.fi](https://budjetti.cs.tut.fi/), and 3) participating information literacy training by university Library. All details you will find from the course Moodle page or ask from the seminar course instructor.
 
