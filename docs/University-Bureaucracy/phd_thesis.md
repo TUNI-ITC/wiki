@@ -49,14 +49,14 @@ Before writing you need a suitable template. Vast majority of people prefer Late
 **Input:** Final draft of thesis and fixed using the comments from your supervisor. The pre-examination form.
 
 Your supervisor selects two reviewers, makes sure they are available and willing and fills the official form (see below). You need to send the following two documents to your doctoral program *academic officer*
-(e.g. [for DPCEE](https://intra.tuni.fi/en/handbook?page=5612) and [for others](https://intra.tuni.fi/en/studying/doctoral-studies/forms-doctoral-students)):
+([contact details and deadlines](https://intra.tuni.fi/en/studying/doctoral-studies/doctoral-programmes)):
 
  1. [The "proposal of pre-examiners" form](https://intra.tuni.fi/en/studying/doctoral-studies/forms-doctoral-students) filled (ask your supervisor to help).
  2. PhD thesis in PDF format. If a compilation thesis, then it should include the articles. Make a single PDF and if its size >15MB you should downscale your images before compiling the PDF
 
 You may also want to read [general guidelines from the university](https://intra.tuni.fi/en/studying/doctoral-studies/doctoral-dissertation-and-public-defence).
 
-Your documents will be processed by the Faculty council (they meet [~once a month](https://intra.tuni.fi/en/handbook?page=5612)) and you will receive an email notification once this is done. Your pre-examiners will also receive a formal invitation and the submitted PhD thesis. Now you cross your fingers, wait for two months and hope for positive reviews. Time to think what you will do next in your life and perhaps stat to look for a position in academia or industry!
+Your documents will be processed by the Faculty council (they meet ~once a month) and you will receive an email notification once this is done. Your pre-examiners will also receive a formal invitation and the submitted PhD thesis. Now you cross your fingers, wait for two months and hope for positive reviews. Time to think what you will do next in your life and perhaps stat to look for a position in academia or industry!
 
 **Output:** Faculty council decision for pre-examination. Official invitations to the pre-examiners.
 
