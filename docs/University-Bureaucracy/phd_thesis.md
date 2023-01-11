@@ -49,7 +49,7 @@ Before writing you need a suitable template. Vast majority of people prefer Late
 **Input:** Final draft of thesis and fixed using the comments from your supervisor. The pre-examination form.
 
 Your supervisor selects two reviewers, makes sure they are available and willing and fills the official form (see below). You need to send the following two documents to your doctoral program *academic officer*
-([contact details and deadlines](https://intra.tuni.fi/en/studying/doctoral-studies/doctoral-programmes)):
+([contact details and submission deadlines](https://intra.tuni.fi/en/studying/doctoral-studies/doctoral-programmes)):
 
  1. [The "proposal of pre-examiners" form](https://intra.tuni.fi/en/studying/doctoral-studies/forms-doctoral-students) filled (ask your supervisor to help).
  2. PhD thesis in PDF format. If a compilation thesis, then it should include the articles. Make a single PDF and if its size >15MB you should downscale your images before compiling the PDF
