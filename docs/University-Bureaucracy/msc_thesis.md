@@ -70,5 +70,5 @@ Evaluation criteria and evaluation templates can be found from thise [official p
 
 Enjoy your life, You deserve good life!
 
-However, keep updating your knowledge so that your knowledge and skills remain curant for the future jobs and needs!
+However, keep updating your knowledge so that your knowledge and skills remain current for the future jobs and needs!
 
