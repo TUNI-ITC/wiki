@@ -134,9 +134,19 @@ Please see this video if you are unfamiliar with Conda:
 
     [Installing on Linux — conda 24.1.3.dev33 documentation](https://conda.io/projects/conda/en/latest/user-guide/install/linux.html)
 
-- Good cheat sheet for commands
+- Good cheat sheet for commands [here](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf)
 
-    [](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf)
+!!! tip
+    By default conda environments will be installed to the home directory of the user (`~/miniconda3/envs`). This is not ideal since the home directory is located on the SSD and the space is limited. Instead, you should install the environments to the NVMe disk, and make a symbolic link to the custom location to easily activate such environment. Here is how you can do it:
+
+    ```bash
+    # Create environment
+    conda create --prefix /home/nvme/$USER/.envs/$MY_ENV python=3.9
+    # Create symbolic link
+    ln -s /home/nvme/$USER/.envs/$MY_ENV ~/miniconda3/envs/$MY_ENV
+    # Activate environment
+    conda activate $MY_ENV
+    ```
 
 ### VSCode
 
