@@ -75,6 +75,21 @@ This automation script will run as the 5 steps below:
 
 ## How to use it
 
+Please firstly download the script from the following link: [auto_gpu](xxx). Then you can put it into your user folder.
+And you can run the script by the following command:
+
+```shell
+./auto_gpu
+```
+
+If the permission is denied, you can give the execution permission to it by running the following command:
+
+```shell
+chmod +x auto_gpu
+```
+
+Then it can work properly.
+
 ### How to start a new job
 
 This script provides a lot of options for you to customize your job. If you want to check the help information, you can
