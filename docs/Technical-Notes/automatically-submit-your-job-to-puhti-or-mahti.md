@@ -17,7 +17,8 @@
     1. [How to modify the PyTorch-based model training script](#how-to-modify-the-pytorch-based-model-training-script)
     2. [Some notifications for the command you want to run](#some-notifications-for-the-command-you-want-to-run)
     3. [Distributed Data Parallel (DDP) with PyTorch](#distributed-data-parallel-ddp-with-pytorch)
-5. [Contact](#contact)
+5. [Some errors and solutions](#some-errors-and-solutions)
+6. [Contact](#contact)
 
 ## Motivation
 
@@ -104,27 +105,29 @@ And the information will be shown as below:
 
 ```shell
 Options:
-  -h, --help                            Display help
+  -h, --help                            Display help.
                                         
-  -t <time>, --want_time=<time>         Set the time you want to use the GPU, and the format must be 'D-HH:MM:SS' (D: days, HH: hours, MM: minutes, SS: seconds). The default is 0-00:15:00
+  -j <job_name>, --job_name=<job_name>  Set the job name you want to use. No default value. Please set different names for different jobs! This is an identifier for the job.
                                         
-  -a <account>, --account=<account>     Set the account you want to use. (Not the username, this should be your csc group name) No default value
+  -a <account>, --account=<account>     Set the account you want to use. No default value.
                                         
-  -s, --small                           Use gpusmall on mahti
-  -m, --medium                          Use gpumedium on mahti
-  -l, --large                           Use gpu on puhti
+  -t <time>, --want_time=<time>         Set the time you want to use the GPU, and the format must be 'D-HH:MM:SS' (D: days, HH: hours, MM: minutes, SS: seconds). The default is 0-00:15:00.
                                         
-  -n <num>, --num_nodes=<num>           Set the number of nodes you want to use. The default is 1
+  -s, --small                           Use gpusmall on mahti.
+  -m, --medium                          Use gpumedium on mahti.
+  -l, --large                           Use gpu on puhti.
                                         
-  -g <num>, --num_gpus_per_node=<num>   Set the number of GPUs per node you want to use. The default is 1
+  -n <num>, --num_nodes=<num>           Set the number of nodes you want to use. The default is 1.
                                         
-  --num_tasks_per_node=<num>            Set the number of tasks per node you want to use. The default is 1
+  -g <num>, --num_gpus_per_node=<num>   Set the number of GPUs per node you want to use. The default is 1.
                                         
-  -c <num>, --num_cpus_per_task=<num>   Set the number of CPUs per task you want to use. The default is 4
+  --num_tasks_per_node=<num>            Set the number of tasks per node you want to use. The default is 1.
                                         
-  --mem_per_cpu=<num>                   Set the memory per CPU you want to use. The default is 8000
+  -c <num>, --num_cpus_per_task=<num>   Set the number of CPUs per task you want to use. The default is 4.
                                         
-  --cmd=<command>, --command=<command>  Set the command you want to run, it must be double quote. No default value
+  --mem_per_cpu=<num>                   Set the memory per CPU you want to use. The default is 8000.
+                                        
+  --cmd=<command>, --command=<command>  Set the command you want to run, it must be double quote. No default value.
 ```
 
 Now, if we want to apply for 1 node with 1 GPU (gpusmall) on Mahti for 1 hour to run <your_command>, we can run one of
@@ -222,6 +225,68 @@ multiple GPUs on each node to train your model. There is already an excellent tu
 Mahti. Please find the
 tutorial [here](https://tuni-itc.github.io/wiki/Technical-Notes/Distributed_dataparallel_pytorch/). Thanks to Soumya (
 soumya.tripathy@tuni.fi).
+
+## Some errors and solutions
+
+- Wrong server
+```shell
+Please run this script on Puhti or Mahti.
+```
+
+- Invalid input, terminating...
+```shell
+Please check the input parameters and try again.
+```
+
+- The account is empty.
+```shell
+Please set the account you want to use.
+```
+
+- The command you want to run is empty.
+```shell
+Please set the command you want to run with double quotes.
+```
+
+- The job name is empty.
+```shell
+Please set the job name you want to use.
+```
+
+- mahti does not support the gpu_type 'gpu'.
+```shell
+Please choose the correct GPU type (small -s or medium -m) for Mahti.
+```
+
+- puhti does not support the gpu_type 'gpusmall' / 'gpumedium'.
+```shell
+Please choose the correct GPU type (gpu -l) for Puhti.
+```
+
+- Due to the resources limitation, please do not automatically apply for an interactive job, which will lead to lots of waste of resources. Please apply for such jobs manually.
+```shell
+Please run some non-interactive jobs.
+```
+
+- The format of time should be 'D-HH:MM:SS' (D: days, HH: hours, MM: minutes, SS: seconds)
+```shell
+Please set the time with the correct format.
+```
+
+- You have already applied for the job <job_name>, please use another job name.
+```shell
+Please set a different job name for different jobs.
+```
+
+- You have already applied for too many jobs, please stop some of them first.
+```shell
+Please stop some of the running jobs.
+```
+
+- Something wrong happened; please check if your request meets the rules of the server.
+```shell
+Please check the info on (https://docs.csc.fi/computing/running/batch-job-partitions/)
+```
 
 ## Contact
 
