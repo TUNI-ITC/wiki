@@ -90,7 +90,7 @@ This automation script will run as the 5 steps below:
 
 ## How to use it
 
-Please firstly download the script from the following link: [auto_gpu](assets/auto_gpu). Then you can put it into your
+Please firstly download the script from the following link: [auto_gpu](https://github.com/TUNI-ITC/wiki/raw/main/docs/assets/auto_gpu). Then you can put it into your
 user folder. And you can run the script by the following command:
 
 ```shell
