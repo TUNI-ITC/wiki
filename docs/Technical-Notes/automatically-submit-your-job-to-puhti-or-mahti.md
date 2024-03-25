@@ -3,22 +3,23 @@
 ## Table of Contents
 
 1. [Motivation](#motivation)
-2. [Introduction](#introduction)
+2. [Dislaimer](#disclaimer)
+3. [Introduction](#introduction)
     1. [What is the automation script?](#what-is-the-automation-script)
     2. [Why use the automation script?](#why-use-the-automation-script)
     3. [How does the automation script work?](#how-does-the-automation-script-work)
     4. [What are the requirements for using the automation script?](#what-are-the-requirements-for-using-the-automation-script)
     5. [What are the limitations of the automation script?](#what-are-the-limitations-of-the-automation-script)
-3. [How to use it](#how-to-use-it)
+4. [How to use it](#how-to-use-it)
     1. [How to start a new job](#how-to-start-a-new-job)
     2. [How to check the status of a job](#chow-to-heck-the-status-of-a-job)
     3. [How to stop a running job](#how-to-stop-a-running-job)
-4. [How to use this script for PyTorch model training](#how-to-use-this-script-for-pytorch-model-training)
+5. [How to use this script for PyTorch model training](#how-to-use-this-script-for-pytorch-model-training)
     1. [How to modify the PyTorch-based model training script](#how-to-modify-the-pytorch-based-model-training-script)
     2. [Some notifications for the command you want to run](#some-notifications-for-the-command-you-want-to-run)
     3. [Distributed Data Parallel (DDP) with PyTorch](#distributed-data-parallel-ddp-with-pytorch)
-5. [Some errors and solutions](#some-errors-and-solutions)
-6. [Contact](#contact)
+6. [Some errors and solutions](#some-errors-and-solutions)
+7. [Contact](#contact)
 
 ## Motivation
 
@@ -29,6 +30,19 @@ to submit the job manually, which will lead to lots of time wasted if you couldn
 current work is done. Therefore, we provide an automation script to help you submit your job to Puhti or Mahti. You
 don't need to worry that your job stops running during the night or your holiday anymore. Just enjoy your time and let
 the automation script do the rest for you.
+
+## Disclaimer
+
+- Important! Please follow the rules of CSC when using this script! If you have any questions about the rules, please check the
+  information on [Docs CSC](https://docs.csc.fi/).
+- This script is binary encrypted, and the source code is not available. Please use it following the instructions and do
+  not modify it.
+- This script is only available for Puhti or Mahti.
+- This script is only available for non-interactive jobs. If you want to run an interactive job, you need to submit the
+  job manually.
+- This script is only available for 4 jobs at the same time. If you want to run more jobs, you need to stop some of them
+  first.
+- If you got any problems or bugs when using this script, please [contact me](#contact).
 
 ## Introduction
 
@@ -58,7 +72,7 @@ This automation script will run as the 5 steps below:
 - You need to have a user account available on Puhti or Mahti
 - You need to put this automation script into your user directory on Puhti or Mahti
 - If this script couldn't be executed, you need to give the execution permission to it by
-  running `chmod +x <script_name>`
+  running `chmod +x auto_gpu`
 
 ### What are the limitations of the automation script?
 
@@ -76,8 +90,8 @@ This automation script will run as the 5 steps below:
 
 ## How to use it
 
-Please firstly download the script from the following link: [auto_gpu](xxx). Then you can put it into your user folder.
-And you can run the script by the following command:
+Please firstly download the script from the following link: [auto_gpu](assets/auto_gpu). Then you can put it into your
+user folder. And you can run the script by the following command:
 
 ```shell
 ./auto_gpu
@@ -229,61 +243,74 @@ soumya.tripathy@tuni.fi).
 ## Some errors and solutions
 
 - Wrong server
+
 ```shell
 Please run this script on Puhti or Mahti.
 ```
 
 - Invalid input, terminating...
+
 ```shell
 Please check the input parameters and try again.
 ```
 
 - The account is empty.
+
 ```shell
 Please set the account you want to use.
 ```
 
 - The command you want to run is empty.
+
 ```shell
 Please set the command you want to run with double quotes.
 ```
 
 - The job name is empty.
+
 ```shell
 Please set the job name you want to use.
 ```
 
 - mahti does not support the gpu_type 'gpu'.
+
 ```shell
 Please choose the correct GPU type (small -s or medium -m) for Mahti.
 ```
 
 - puhti does not support the gpu_type 'gpusmall' / 'gpumedium'.
+
 ```shell
 Please choose the correct GPU type (gpu -l) for Puhti.
 ```
 
-- Due to the resources limitation, please do not automatically apply for an interactive job, which will lead to lots of waste of resources. Please apply for such jobs manually.
+- Due to the resources limitation, please do not automatically apply for an interactive job, which will lead to lots of
+  waste of resources. Please apply for such jobs manually.
+
 ```shell
 Please run some non-interactive jobs.
 ```
 
 - The format of time should be 'D-HH:MM:SS' (D: days, HH: hours, MM: minutes, SS: seconds)
+
 ```shell
 Please set the time with the correct format.
 ```
 
 - You have already applied for the job <job_name>, please use another job name.
+
 ```shell
 Please set a different job name for different jobs.
 ```
 
 - You have already applied for too many jobs, please stop some of them first.
+
 ```shell
 Please stop some of the running jobs.
 ```
 
 - Something wrong happened; please check if your request meets the rules of the server.
+
 ```shell
 Please check the info on (https://docs.csc.fi/computing/running/batch-job-partitions/)
 ```
