@@ -135,6 +135,8 @@ Options:
                                         
   -g <num>, --num_gpus_per_node=<num>   Set the number of GPUs per node you want to use. The default is 1.
                                         
+  --nvme=<num>, --nvme_per_node=<num>   Set the local storage per node (GB) you want to use. No default value.
+                                        
   --num_tasks_per_node=<num>            Set the number of tasks per node you want to use. The default is 1.
                                         
   -c <num>, --num_cpus_per_task=<num>   Set the number of CPUs per task you want to use. The default is 4.
@@ -148,8 +150,8 @@ Now, if we want to apply for 1 node with 1 GPU (gpusmall) on Mahti for 1 hour to
 the following commands:
 
 ```shell
-./auto_gpu -t 0-01:00:00 -s -a <your_csc_group_name> --cmd="<your_command>"
-./auto_gpu --want_time=0-01:00:00 --small --account=<your_csc_group_name> --command="<your_command>"
+./auto_gpu -t 0-01:00:00 -s -j <your_job_name> -a <your_csc_group_name> --cmd="<your_command>"
+./auto_gpu --want_time=0-01:00:00 --small --job_name=<your_job_name> --account=<your_csc_group_name> --command="<your_command>"
 ```
 
 If you want to apply for different GPU type, more time, nodes, GPUs, CPUs, or memory, you can customize the options as
@@ -229,7 +231,7 @@ model.load_state_dict(
 Here is an example:
 
 ```shell
-./auto_gpu -t 0-01:00:00 -s -a <your_csc_group_name> --cmd="/<your_anaconda_path>/anaconda3/envs/<your_env_name>/bin/python /<your_python_project_path>/<your_python_script_name>.py >> /<your_log_path>/<your_log_name>.log"
+./auto_gpu -t 0-01:00:00 -s -j <your_job_name> -a <your_csc_group_name> --cmd="/<your_anaconda_path>/anaconda3/envs/<your_env_name>/bin/python /<your_python_project_path>/<your_python_script_name>.py >> /<your_log_path>/<your_log_name>.log"
 ```
 
 ### Distributed Data Parallel (DDP) with PyTorch
