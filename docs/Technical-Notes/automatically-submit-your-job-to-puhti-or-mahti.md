@@ -125,7 +125,7 @@ Options:
                                         
   -a <account>, --account=<account>     Set the account you want to use. No default value.
                                         
-  -t <time>, --want_time=<time>         Set the time you want to use the GPU, and the format must be 'D-HH:MM:SS' (D: days, HH: hours, MM: minutes, SS: seconds). The default is 0-00:15:00.
+  -t <time>, --want_time=<time>         Set the time you want to use the GPU (!!!the maximum of one round, not the whole time!!!), and the format must be 'D-HH:MM:SS' (D: days, HH: hours, MM: minutes, SS: seconds). The default is 0-00:15:00.
                                         
   -s, --small                           Use gpusmall on mahti.
   -m, --medium                          Use gpumedium on mahti.
