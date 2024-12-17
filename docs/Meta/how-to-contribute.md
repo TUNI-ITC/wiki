@@ -67,9 +67,13 @@ You may freely edit an existing file or create new, e.g., `how-to-select-a-coffe
 We are using [Material Theme](https://squidfunk.github.io/) for [MkDocs](https://www.mkdocs.org/). Hence, you may also propose to add more functionality to our wiki. Check out the manuals of both to see what else we can add.
 
 ??? question "Can I check locally how it will look?"
-    Sure thing! You will only need to install the `mkdocs-material` python package:
+    Sure thing! You will only need to install the `mkdocs-material` python package using either
     ```bash
     pip install mkdocs-material
+    ```
+    or (Ubuntu preferred)
+    ```bash
+    sudo apt install mkdocs-material
     ```
     Once done, you can start a preview server locally
     ```bash
