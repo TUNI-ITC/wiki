@@ -1,14 +1,17 @@
 # MSc Thesis
-MSc thesis project is the last step of your studies. It is typically six months of full-time coding, building, testing and writing. 
+MSc thesis project typically takes 5-8 months of full-time work. It includes reading papers and books related to your work, implementing or adapting existing code and methods, testing them, and finally writing the thesis manuscript.
 
-The thesis is about marketing yourself and therefore you should impress yourself, your family, your supervisors and your future employer.
+The thesis is about marketing yourself and therefore you should impress yourself, your family, your supervisors, and your future employer.
 
-It is advisable to produce Github pages for your code and data with nice Wiki how to replicate the results and link to the thesis PDF. Its even better if the page also contains a Youtube video of your amazing work.
+It is advisable to produce Github pages for your code and data with nice Wiki how to replicate the results and link to the thesis PDF. Its even better if the page also contains a Youtube video of your amazing work. A good example is, for example, [Lauri's personal page](https://lasuomela.github.io/).
 
 ## Stage 1 - Find a topic
-When your studies are almost finished (2nd year of Master studies) you should start looking for a job or intern position where you can do your thesis. This could be at your current position, a university research group or perhaps you find a better place!
+At least 6 months before finishing all your courses you must start looking for 
+a job where you can do your thesis. Most MSc theses in Finland are done in companies so seek for any open junior position and they will understand that you need to write a thesis.
 
-You are young, full life ahead, so it is recommended that 1) you do something meaningful and difficult, 2) you learn a lot and 3) you impress people you work for.
+To make something meaningful that benefits your career, 
+1) do thesis about something meaningful and difficult so that you learn new,
+2) do it so well that it will impress people who pay your salary.
 
 You could contact your professors and ask them for open topics in their research groups (paid and unpaid positions are available) or if they know any companies who are looking for a master's thesis worker. Be active and search until you find a place that suits you and you suit that place.
 
@@ -19,7 +22,7 @@ You should have two supervisors: 1) Academic supervisor who is a senior staff fr
 
 Company pays your salary so you must make your technical supervisor to agree what you do, especially if you do the work during your working hours. You also must know confidential things that cannot be put to your thesis as MSc theses are always public.
 
-**Concrete action:** Fill and agree the thesis supervision plan with your supervisors ([official form](https://content-webapi.tuni.fi/proxy/public/2019-06/opas_ykk_ohjaussuunnitelma_fineng.rtf))
+**Concrete action:** Read information in MSc thesis Moodle and fill the supervision plan ([CS Thesis Moodle](https://moodle.tuni.fi/course/view.php?id=41274).
 
 ## Stage 3 - Do the thesis project (~5 months)
 **Important:** There are three important things to bear in mind: 1) read what others have done (related work), 2) read what others have done (related work) and finally 3) read what others have done (related work).
@@ -45,16 +48,13 @@ Check out this Latex template: [MSc thesis template (Latex)](https://github.com/
 
 Examples of great theses (although your main supervisor may have different examples so ask him/her):
 
-- Valtteri Kaatrasalo (2022): [Computer vision methods for augmented reality](https://urn.fi/URN:NBN:fi:tuni-202204042972)
-- Leevi Raivio (2021): [Visual metric-semantic 3D reconstruction](https://urn.fi/URN:NBN:fi:tuni-202105175105)
-- Lauri Suomela (2021): [Implementing HR analytics: Premises for value creating analytics](https://urn.fi/URN:NBN:fi:tuni-202104263640)
-- Atakan Dag (2021): [Comparison of monolithic and hybrid controllers for multi-objective sim-to-real learning](https://urn.fi/URN:NBN:fi:tuni-202104142975)
-- Eero Heinänen (2018): [A Method for automatic tuning of PID controller following Luus-Jaakola optimization](https://urn.fi/URN:NBN:fi:tty-201810242459)
-- Matti Tuhola (2018): [English Lexical Stress Recognition Using Recurrent Neural Networks](https://urn.fi/URN:NBN:fi:tuni-201909303608)
-- Giambattista Parascandolo (2015): [Recurrent neural networks for polyphonic sound event detection](https://urn.fi/URN:NBN:fi:tty-201511241773)
+- Frans Murto (2024 - made at Bitwise): [Real-time expected possession value estimation in ice hockey](https://urn.fi/URN:NBN:fi:tuni-2024112810595)
+- Valtteri Kaatrasalo (2022 - made at Uni): [Computer vision methods for augmented reality](https://urn.fi/URN:NBN:fi:tuni-202204042972)
+- Atakan Dag (2021 - made at Uni): [Comparison of monolithic and hybrid controllers for multi-objective sim-to-real learning](https://urn.fi/URN:NBN:fi:tuni-202104142975)
+- Eero Heinänen (2018 - made at OptoFidelity): [A Method for automatic tuning of PID controller following Luus-Jaakola optimization](https://urn.fi/URN:NBN:fi:tty-201810242459)
 
 
-**Actions:** You must attend the MSc thesis seminar course of you major. The seminar typically includes: 1) watching MSc presentations by others, 2) presenting your work (at least once, agree this with your supervisor); in CS the presentations are available in [budjetti.cs.tut.fi](https://budjetti.cs.tut.fi/), and 3) participating information literacy training by university Library. All details you will find from the course Moodle page or ask from the seminar course instructor.
+**Actions:** You must attend the MSc thesis seminar course of you major. The seminar typically includes: 1) watching MSc presentations by others, 2) presenting your work (at least once, agree this with your supervisor); and 3) participating information literacy training by university Library. All details you will find from the course Moodle page or ask from the seminar course instructor.
 
 ## Stage 5 - Submitting the thesis
 You must ask your academic supervisor comments for your thesis. Some supervisors comment multiple versions the manuscript, but some only the *final draft* i.e. the version that you think is pretty much ready. Ask your supervisor(s) what he/she prefers. Remember that you are evaluated every time you send something to your supervisor!
