@@ -54,11 +54,28 @@ Even though university-maintained devices can reach `pit.cs.tut.fi` without any 
     ```
     After doing this, you will be able to do `ssh connection_name` to `ssh` directly to `*********.pit.cs.tut.fi`, forward ports, and transfer large files using `scp/rsync`. It is also useful if you are using `VSCode` or any other text editor which supports remote development. Additionally, it is handy if you would like to mount folders from the host to your client. You can use `sshfs connection_name:/path/to/remote_folder /path/to/local_folder`.
 
+### (Optional) How to Set up SSH Keys
+To avoid needing to constantly give your TUNI password to the proxy server and host password when connecting to your SAUNA machine, your SSH key pair should be set up. An SSH key is a cryptographic key used for secure, authenticated access to a remote server. The SSH key pair consists of a *private* key, stored on your local machine, and a *public* key which is added to the remote server. Never share your private key. Use the following instructions to set up your SSH keys for your SAUNA machine.
+
+1. Generate your SSH key-pair on your local machine. Identify with your email `ssh-keygen -t ed25519 -C "your_email@example.com"`. Press the **enter** key at each of the questions.
+2. Add your public key to the forwarding server with command `ssh-copy-id your_tuni_username@ssh-forward.tuni.fi`. This will require your TUNI password once.
+3. Test that it worked (no password should be required for this login) `ssh your_tuni_username@ssh-forward.tuni.fi`. Return to local machine with `exit`.
+4. Now, we do the same to the SAUNA machine. Follow the steps below depending on if you have set up your `~/.ssh/config`.
+
+    a. (RECOMMENDED) Requires the outcome of the above tip regarding your `~/.ssh/config` file. Add your public key to the SAUNA machine with the command `ssh-copy-id <connection_name>`, where `connection_name` was set in the tip above in your `~/.ssh/config`. You will need to give the host password once.
+
+    b. (NOT RECOMMENDED) Alternatively, when using the long command above, we need to copy the public key manually. You can find the name of your public key file with `ls ~/.ssh/*.pub`. However, with the generation command in these instructions it would be `id_ed25519.pub`. Now, copy your public key to the SAUNA machine with the command:
+    ```
+    cat ~/.ssh/<name_of_public_key_file>.pub | ssh -J your_tuni_username@ssh-forward.tuni.fi your_host_username@*********.pit.cs.tut.fi 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys'
+    ```
+    It will ask the host passwork once. Then you can test if it worked by running the long command `ssh-copy-id -J your_tuni_username@ssh-forward.tuni.fi your_host_username@*********.pit.cs.tut.fi`. Now it should not ask for the host password.
+
+If everything went as it should, now connecting to your SAUNA machine should not require any passwords in terminal, VSCode, etc.
+
 ## Known Issues
 - At the moment, only a staff member (doctorate students are staff members usually) can use
 `ssh-forward.tuni.fi` proxy and, therefore, benefit from this set up. Please, let us know if you found
 a way around it.
 - You will need to contact `it-helpdesk@tuni.fi` and ask to activate and configure your wall internet socket in a special way. This might take some time.
-- `ssh-forward.tuni.fi` doesn't support key-pair authentication.
 - Depending on the network you are using, a different log in procedure will be required: only your TUNI password if you are connected to `roam.fi/eduroam/TUNI-STAFF`; and 2FA + your TUNI and host-machine passwords  on other networks.
 - `ssh-forward.tuni.fi` has very limited disk space for each user (few MB). Therefore, can only be used as a proxy for your `ssh` connection *which is its main purpose*.
