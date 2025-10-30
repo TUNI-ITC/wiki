@@ -15,7 +15,7 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 
 - [How to set up Remote Access](Technical-Notes/how-to-set-up-remote-access.md)
 - [How to install TUNI VPN](Technical-Notes/install-tuni-vpn.md)
-- [TUNI Narvi Cluster](Technical-Notes/tuni-narvi-cluster.md)
+- [TUNI TCSC Cluster](Technical-Notes/tuni-tcsc-cluster.md)
 - [Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi](Technical-Notes/Distributed_dataparallel_pytorch.md)
 - [Version control](Technical-Notes/version_control.md)
 - [Wireless connections](Technical-Notes/wifi.md)
@@ -29,3 +29,8 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 
 - [Computer Vision Group](https://research.tuni.fi/vision/)
 - [Tampere University](https://www.tuni.fi/en)
+
+## Outdated
+Information not valid for TUNI users, but can still be useful knowledge.
+
+- [TUNI Narvi Cluster](X-Outdated/tuni-narvi-cluster.md)
