@@ -20,6 +20,7 @@ This wiki is meant to be a tool for personnel of our department, supporting rese
 - [Version control](Technical-Notes/version_control.md)
 - [Wireless connections](Technical-Notes/wifi.md)
 - [SAUNA Machines Best Practices, Tips and Tricks](Technical-Notes/sauna-machines-tips-and-tricks.md)
+- [Custom LUMI Python Environments](Technical-Notes/custom_LUMI_python_envs.md)
 
 ## Meta
 
