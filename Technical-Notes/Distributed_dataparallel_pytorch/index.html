@@ -1,0 +1,1485 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../Meta/how-to-contribute/">
+      
+      
+        <link rel="next" href="../automatically-submit-your-job-to-puhti-or-mahti/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters - Tampere University ITC Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#distributed-data-parallel-training-using-pytorch-on-the-multiple-nodes-of-csc-and-narvi-clusters" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-header__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tampere University ITC Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-nav__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Tampere University ITC Wiki
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Meta
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meta
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Meta/how-to-contribute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Contribute to This Wiki?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Technical Notes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-pytorch-model-without-distributeddataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up a PyTorch model without DistributedDataParallel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-same-model-with-distributeddataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up the same model with DistributedDataParallel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributeddataparallel-as-a-batch-job-in-the-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      DistributedDataParallel as a Batch job in the servers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-and-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips and Tricks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Acknowledgements
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automatically-submit-your-job-to-puhti-or-mahti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    An automation script to run your job to Puhti or Mahti
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom_LUMI_python_envs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-set-up-remote-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Set up Remote Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-tuni-vpn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install TUNI VPN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sauna-machines-tips-and-tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Best Practices, Tips and Tricks for SAUNA Machines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tuni-tcsc-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TUNI TCSC Cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version_control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Version Control
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Wireless connections
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    University Bureaucracy
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            University Bureaucracy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/cs_curricula/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Computing Sciences Curricula
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/employee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Make a work contract request
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/msc_thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MSc Thesis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/phd_thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PhD Thesis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    X Outdated
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            X Outdated
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../X-Outdated/tuni-narvi-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TUNI Narvi Cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outline
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-a-pytorch-model-without-distributeddataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up a PyTorch model without DistributedDataParallel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-same-model-with-distributeddataparallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up the same model with DistributedDataParallel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributeddataparallel-as-a-batch-job-in-the-servers" class="md-nav__link">
+    <span class="md-ellipsis">
+      DistributedDataParallel as a Batch job in the servers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips-and-tricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tips and Tricks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acknowledgements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Acknowledgements
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="distributed-data-parallel-training-using-pytorch-on-the-multiple-nodes-of-csc-and-narvi-clusters">Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#outline">Outline</a></li>
+<li><a href="#setting-up-a-pytorch-model-without-distributeddataparallel">Setting up a PyTorch model without DistributedDataParallel</a></li>
+<li><a href="#setting-up-the-same-model-with-distributeddataparallel">Setting up the same model with DistributedDataParallel</a></li>
+<li><a href="#distributeddataparallel-as-a-batch-job-in-the-servers">DistributedDataParallel as a Batch job in the servers</a></li>
+<li><a href="#tips-and-tricks">Tips and Tricks</a></li>
+<li><a href="#acknowledgements">Acknowledgements</a></li>
+</ol>
+<h2 id="motivation">Motivation</h2>
+<p>Training a Deep Neural Network (DNNs) is notoriously time-consuming especially nowadays when they are getting bigger to get better. To reduce the training time, we mostly train it on the multiple gpus within a single node or across different nodes. This tutorial is focused on the latter where multiple nodes are utilised using PyTorch. Although there are many tutorials available on the web including one from the <a href="https://pytorch.org/tutorials/intermediate/ddp_tutorial.html">PyTorch</a>, they are not self-sufficient in explaining some of the key issues like how to run the code, how to save checkpoints, or how to create a batch script for this in the severs. I have given a starter kit here which addresses these issues and can be helpful to students of our university in setting up their first multi-gpu training in the servers like CSC-Puhti or Narvi.</p>
+<h2 id="outline">Outline</h2>
+<p>PyTorch mostly provides two functions namely <code>nn.DataParallel</code> and <code>nn.DistributedDataParallel</code> to use multiple gpus in a single node and multiple nodes during the training respectively. However, it is recommended by <a href="https://pytorch.org/tutorials/intermediate/ddp_tutorial.html">PyTorch</a> to use <code>nn.DistributedDataParallel</code> even in the single node to train faster than the <code>nn.DataParallel</code>. For more details, I would recommend reading the PyTorch docs. This tutorial assumes that the reader is familiar with the DNNs training using PyTorch and basic operations on the gpu-servers of our university.</p>
+<h2 id="setting-up-a-pytorch-model-without-distributeddataparallel">Setting up a PyTorch model without DistributedDataParallel</h2>
+<p>I have considered a simple Auto-Encoder (AE) model for demonstration where the inputs are images of digits from <a href="http://yann.lecun.com/exdb/mnist/">MNIST</a> data-set. Just to be clear, AE takes images as input and encodes it to a much smaller dimension w.r.t its inputs and then try to reconstruct the images back from those smaller dimensions. It can be considered as a process of compression and decompression. We train the network to learn this smaller dimension such that the reconstructed image is very close to input. Let's begin by defining the network structure.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentParser</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AE</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;input_shape&quot;</span><span class="p">],</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="c1"># small dimension</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="c1"># Recconstruction of input</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;input_shape&quot;</span><span class="p">]),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+        <span class="n">reconstructed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reconstructed</span>
+</code></pre></div>
+Lets create a <code>train()</code> function where we load the MNIST data-set and this can easily be done from the <code>torchvision.dataset</code> library as follows
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+        <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span>
+        <span class="n">root</span><span class="o">=</span><span class="s2">&quot;~/mnist_dataset&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+</code></pre></div>
+Transfer the model to the GPU now and declare the optimiser and loss criterion for the training process.
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+        <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span>
+        <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./mnist_dataset&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># load the model to the specified device, gpu-0 in our case</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AE</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="mi">784</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
+    <span class="c1"># create an optimizer object</span>
+    <span class="c1"># Adam optimizer with learning rate 1e-3</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    <span class="c1"># Loss function</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+</code></pre></div>
+Now wrap everything in the training function and start training</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+        <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span>
+        <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./mnist_dataset&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># load the model to the specified device, gpu-0 in our case</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AE</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="mi">784</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
+    <span class="c1"># create an optimizer object</span>
+    <span class="c1"># Adam optimizer with learning rate 1e-3</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    <span class="c1"># Loss function</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">batch_features</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+            <span class="c1"># reshape mini-batch data to [N, 784] matrix</span>
+            <span class="c1"># load it to the active device</span>
+            <span class="n">batch_features</span> <span class="o">=</span> <span class="n">batch_features</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
+
+            <span class="c1"># reset the gradients back to zero</span>
+            <span class="c1"># PyTorch accumulates gradients on subsequent backward passes</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+            <span class="c1"># compute reconstructions</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch_features</span><span class="p">)</span>
+
+            <span class="c1"># compute training reconstruction loss</span>
+            <span class="n">train_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">batch_features</span><span class="p">)</span>
+
+            <span class="c1"># compute accumulated gradients</span>
+            <span class="n">train_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="c1"># pe-rform parameter update based on current gradients</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="c1"># add the mini-batch training loss to epoch loss</span>
+            <span class="n">loss</span> <span class="o">+=</span> <span class="n">train_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+            <span class="c1"># compute the epoch training loss</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+
+        <span class="c1"># display the epoch training loss</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch: </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+</code></pre></div>
+Now lets finish this code with a <code>main()</code> function that calls the train function and defines the required arguments.
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--ngpus&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of gpus per node&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--epochs&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of total epochs to run&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">train</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<h2 id="setting-up-the-same-model-with-distributeddataparallel">Setting up the same model with DistributedDataParallel</h2>
+<p>With the multiprocessing, we will run our training script in each node separately and ask PyTorch to handle the synchronisation between them. It makes sure that in each iteration, the same network weights are present in every node but use different data for the forward pass. Then the gradients are accumulated from every node to calculate the change in weights which will be sent to each node for the update. In short, the same network operates on different data in different nodes in parallel to make things faster. To let this internal communication happen between the nodes, we need few information to setup the DistributedParallel environment such as 1. how many nodes we are using, 2. what is the ip-address of the master node and 3. The number of gpus in a single node. I have changed the order of the above code to make it more understandable. We will first start from the <code>main</code> function by defining all the necessary variables.</p>
+<ul>
+<li>A single node can be understood as a single computer with its own gpus and cpus. Here we need multiple of such computers. One thing to remember is that these nodes should be connected to each other. In the servers, they are always connected to each other so we can use it without any problems. In the script, we need to mention the ip-address and port of one of the nodes (we call it the master node) so that all other nodes can be connected to that automatically when we start the script in those nodes.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.multiprocessing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.distributed</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">argparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--nodes&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--local_ranks&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Node&#39;s order number in [0, num_of_nodes-1]&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--ip_adress&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;ip address of the host node&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--checkpoint&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;path to checkpoint to restore&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--ngpus&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of gpus per node&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--epochs&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of total epochs to run&#39;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="c1"># Total number of gpus availabe to us.</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">world_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">ngpu</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">nodes</span>
+    <span class="c1"># add the ip address to the environment variable so it can be easily avialbale</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;MASTER_ADDR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">ip_adress</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ip_adress is&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ip_adress</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;MASTER_PORT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;8888&#39;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;WORLD_SIZE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">world_size</span><span class="p">)</span>
+    <span class="c1"># nprocs: number of process which is equal to args.ngpu here</span>
+    <span class="n">mp</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">nprocs</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ngpus</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">args</span><span class="p">,))</span>
+</code></pre></div>
+<ul>
+<li>You can imagine the <code>local_rank</code> as an unique number associated to each node starting from zero to number of nodes-1. We assign zero rank to the node whose ip-address is passed to the <code>main()</code> and we start the script first on that node. Further, we are going use this number to calculate one more rank for each gpu in that node.</li>
+<li>Instead of calling the <code>train</code> function once, we spawn <code>args.ngpus</code> processes in each node to run <code>args.ngpus</code> instances of <code>train</code> function in parallel.</li>
+</ul>
+<p>Now lets define the function <code>train</code> that can handle these multiple processes.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+    <span class="n">args</span><span class="o">.</span><span class="n">gpu</span> <span class="o">=</span> <span class="n">gpu</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gpu:&#39;</span><span class="p">,</span><span class="n">gpu</span><span class="p">)</span>
+    <span class="c1"># rank calculation for each process per gpu so that they can be identified uniquely.</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">local_ranks</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">ngpus</span> <span class="o">+</span> <span class="n">gpu</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rank:&#39;</span><span class="p">,</span><span class="n">rank</span><span class="p">)</span>
+    <span class="c1"># Boilerplate code to initialize the parallel prccess.</span>
+    <span class="c1"># It looks for ip-address and port which we have set as environ variable.</span>
+    <span class="c1"># If you don&#39;t want to set it in the main then you can pass it by replacing</span>
+    <span class="c1"># the init_method as =&#39;tcp://&lt;ip-address&gt;:&lt;port&gt;&#39; after the backend.</span>
+    <span class="c1"># More useful information can be found in</span>
+    <span class="c1"># https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html</span>
+
+    <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">,</span>
+        <span class="n">init_method</span><span class="o">=</span><span class="s1">&#39;env://&#39;</span><span class="p">,</span>
+        <span class="n">world_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">world_size</span><span class="p">,</span>
+        <span class="n">rank</span><span class="o">=</span><span class="n">rank</span>
+    <span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># start from the same randomness in different nodes. If you don&#39;t set it</span>
+    <span class="c1"># then networks can have different weights in different nodes when the</span>
+    <span class="c1"># training starts. We want exact copy of same network in all the nodes.</span>
+    <span class="c1"># Then it will progress from there.</span>
+
+    <span class="c1"># set the gpu for each processes</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gpu</span><span class="p">)</span>
+
+
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+        <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span>
+        <span class="n">root</span><span class="o">=</span><span class="s2">&quot;~/mnist_dataset&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># Ensures that each process gets differnt data from the batch.</span>
+    <span class="n">train_sampler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">DistributedSampler</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">world_size</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">rank</span>
+    <span class="p">)</span>
+
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span>
+        <span class="c1"># calculate the batch size for each process in the node.</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">128</span><span class="o">/</span><span class="n">args</span><span class="o">.</span><span class="n">ngpus</span><span class="p">),</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="p">(</span><span class="n">train_sampler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span>
+    <span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>As we are going to submit the training script to each node separately, we need to set a random seed to fix the randomness involved in the code. For example, in the very first iteration the network weights will start from the same random weights (seed=0) in the different nodes. Then PyTorch will handle the synchronisation and at the end of training, we will have the same network weights in each node.</li>
+<li><code>train_sampler</code>, <code>manual_seed</code> and <code>modified batch size in the dataloader</code> are important steps to remember while setting this up.</li>
+</ul>
+<p>Finally, wrap the model as DistributedDataParallel and start the training.
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">gpu</span> <span class="o">=</span> <span class="n">gpu</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gpu:&#39;</span><span class="p">,</span><span class="n">gpu</span><span class="p">)</span>
+    <span class="n">rank</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">local_ranks</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">ngpus</span> <span class="o">+</span> <span class="n">gpu</span>
+    <span class="c1"># rank calculation for each process per gpu so that they can be</span>
+    <span class="c1"># identified uniquely.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rank:&#39;</span><span class="p">,</span><span class="n">rank</span><span class="p">)</span>
+    <span class="c1"># Boilerplate code to initialise the parallel process.</span>
+    <span class="c1"># It looks for ip-address and port which we have set as environ variable.</span>
+    <span class="c1"># If you don&#39;t want to set it in the main then you can pass it by replacing</span>
+    <span class="c1"># the init_method as =&#39;tcp://&lt;ip-address&gt;:&lt;port&gt;&#39; after the backend.</span>
+    <span class="c1"># More useful information can be found in</span>
+    <span class="c1"># https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html</span>
+
+    <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">,</span>
+        <span class="n">init_method</span><span class="o">=</span><span class="s1">&#39;env://&#39;</span><span class="p">,</span>
+        <span class="n">world_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">world_size</span><span class="p">,</span>
+        <span class="n">rank</span><span class="o">=</span><span class="n">rank</span>
+    <span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># start from the same randomness in different nodes.</span>
+    <span class="c1"># If you don&#39;t set it then networks can have different weights in different</span>
+    <span class="c1"># nodes when the training starts. We want exact copy of same network in all</span>
+    <span class="c1"># the nodes. Then it will progress form there.</span>
+
+    <span class="c1"># set the gpu for each processes</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gpu</span><span class="p">)</span>
+
+
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+        <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+    <span class="p">])</span>
+
+    <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span>
+        <span class="n">root</span><span class="o">=</span><span class="s2">&quot;./mnist_dataset&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># Ensures that each process gets differnt data from the batch.</span>
+    <span class="n">train_sampler</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">DistributedSampler</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">world_size</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">rank</span>
+    <span class="p">)</span>
+
+    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+        <span class="n">train_dataset</span><span class="p">,</span>
+        <span class="c1"># calculate the batch size for each process in the node.</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">128</span><span class="o">/</span><span class="n">args</span><span class="o">.</span><span class="n">ngpus</span><span class="p">),</span>
+        <span class="n">shuffle</span><span class="o">=</span><span class="p">(</span><span class="n">train_sampler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span>
+    <span class="p">)</span>
+
+
+    <span class="c1"># load the model to the specified device, gpu-0 in our case</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AE</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="mi">784</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gpus</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">DistributedDataParallel</span><span class="p">(</span>
+        <span class="n">model_sync</span><span class="p">,</span> <span class="n">device_ids</span><span class="o">=</span><span class="p">[</span><span class="n">args</span><span class="o">.</span><span class="n">gpu</span><span class="p">],</span> <span class="n">find_unused_parameters</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># create an optimizer object</span>
+    <span class="c1"># Adam optimizer with learning rate 1e-3</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    <span class="c1"># Loss function</span>
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">batch_features</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+            <span class="c1"># reshape mini-batch data to [N, 784] matrix</span>
+            <span class="c1"># load it to the active device</span>
+            <span class="n">batch_features</span> <span class="o">=</span> <span class="n">batch_features</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">784</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gpus</span><span class="p">)</span>
+
+            <span class="c1"># reset the gradients back to zero</span>
+            <span class="c1"># PyTorch accumulates gradients on subsequent backward passes</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+            <span class="c1"># compute reconstructions</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch_features</span><span class="p">)</span>
+
+            <span class="c1"># compute training reconstruction loss</span>
+            <span class="n">train_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">batch_features</span><span class="p">)</span>
+
+            <span class="c1"># compute accumulated gradients</span>
+            <span class="n">train_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+            <span class="c1"># perform parameter update based on current gradients</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="c1"># add the mini-batch training loss to epoch loss</span>
+            <span class="n">loss</span> <span class="o">+=</span> <span class="n">train_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+        <span class="c1"># compute the epoch training loss</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+
+        <span class="c1"># display the epoch training loss</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch: </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dict_model</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;state_dict&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+                <span class="s1">&#39;optimizer&#39;</span><span class="p">:</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+                <span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">epochs</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">dict_model</span><span class="p">,</span> <span class="s1">&#39;./model.pth&#39;</span><span class="p">)</span>
+</code></pre></div></p>
+<ul>
+<li>Save the model only when the rank is zero because all the models are the same. We only need to save one copy of the model. If we are not careful here then all the processes will try to save weights and can corrupt the weights.</li>
+</ul>
+<p>Save the script as <code>train.py</code> in the CSC or Narvi server and submit an interactive job with two gpu nodes (Lets quickly test it on <code>gputest</code> node as <code>srun --pty --account=Project_** --nodes=2 -p gputest --gres=gpu:v100:1,nvme:100 -t 00:15:00 --mem-per-cpu=20000 --ntasks-per-node=1 --cpus-per-task=8 /bin/bash -i</code>). Once it is allocated, ssh to each node in two terminals as <code>ssh &lt;node name&gt;</code>) and submit the job by typing <code>python train.py --ip_adress=**.**.**.** --nodes 2 --local_rank 0 --ngpus 1 --epochs 1</code> and <code>python train.py --ip_adress=&lt;same as the first&gt; --nodes 2 --local_rank 1 --ngpus 1 --epochs 1</code> to each of them respectively. Two job should start with synchronisation and training will begin soon after.</p>
+<ul>
+<li>The ip-address of a node can be obtained by <code>ping &lt;node name&gt;</code></li>
+</ul>
+<h2 id="distributeddataparallel-as-a-batch-job-in-the-servers">DistributedDataParallel as a Batch job in the servers</h2>
+<p>When we are submitting the interactive jobs, we know the exact node name and can obtain the ip-address for that beforehand. However, in the batch job, it needs to be programmed to automate most of the stuff. We have to make minimum changes to the existing code and write a <code>.sh</code> script to submit the job. Our <code>train.py</code> script are modified only in the first few lines of the <code>train()</code> function as follows</p>
+<!-- If you change this block make sure `hl_lines` points to the correct place -->
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+
+    <span class="n">args</span><span class="o">.</span><span class="n">gpu</span> <span class="o">=</span> <span class="n">gpu</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;gpu:&#39;</span><span class="p">,</span><span class="n">gpu</span><span class="p">)</span>
+
+    <span class="c1"># rank calculation for each process per gpu so that they can be</span>
+    <span class="c1"># identified uniquely.</span>
+<span class="hll">    <span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SLURM_NODEID&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">args</span><span class="o">.</span><span class="n">ngpus</span> <span class="o">+</span> <span class="n">gpu</span>
+</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rank:&#39;</span><span class="p">,</span><span class="n">rank</span><span class="p">)</span>
+    <span class="c1"># Boilerplate code to initialise the parallel process.</span>
+    <span class="c1"># It looks for ip-address and port which we have set as environ variable.</span>
+    <span class="c1"># If you don&#39;t want to set it in the main then you can pass it by replacing</span>
+    <span class="c1"># the init_method as =&#39;tcp://&lt;ip-address&gt;:&lt;port&gt;&#39; after the backend.</span>
+    <span class="c1"># More useful information can be found in</span>
+    <span class="c1"># https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html</span>
+
+    <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">,</span>
+        <span class="n">init_method</span><span class="o">=</span><span class="s1">&#39;env://&#39;</span><span class="p">,</span>
+        <span class="n">world_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">world_size</span><span class="p">,</span>
+        <span class="n">rank</span><span class="o">=</span><span class="n">rank</span>
+    <span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># start from the same randomness in different nodes.</span>
+    <span class="c1"># If you don&#39;t set it then networks can have differnt weights in different</span>
+    <span class="c1"># nodes when the training starts. We want exact copy of same network in</span>
+    <span class="c1"># all the nodes. Then it will progress form there.</span>
+
+    <span class="c1"># set the gpu for each processes</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">set_device</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gpu</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Instead of using local rank in calculation of process rank, we use environment variable <code>$SLURM_NODEID</code> which is unique for each slurm node.</li>
+</ul>
+<p>Keeping everything else in the code same, now lets write the batch script for CSC-puhti. Same script can be used for Narvi.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --job-name=name</span>
+<span class="c1">#SBATCH --account=Project_******</span>
+<span class="c1">#SBATCH -o out.txt</span>
+<span class="c1">#SBATCH -e err.txt</span>
+<span class="c1">#SBATCH --partition=gpu</span>
+<span class="c1">#SBATCH --time=08:00:00</span>
+<span class="c1">#SBATCH --ntasks-per-node=1</span>
+<span class="c1">#SBATCH --cpus-per-task=4</span>
+<span class="c1">#SBATCH --mem-per-cpu=8000</span>
+<span class="c1">#SBATCH --gres=gpu:v100:4</span>
+<span class="c1">#SBATCH  --nodes=2</span>
+module<span class="w"> </span>load<span class="w"> </span>gcc/8.3.0<span class="w"> </span>cuda/10.1.168
+<span class="nb">source</span><span class="w"> </span>&lt;virtual<span class="w"> </span>environment<span class="w"> </span>name&gt;
+
+<span class="c1"># if some error happens in the initialation of parallel process then you can</span>
+<span class="c1"># get the debug info. This can easily increase the size of out.txt.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_DEBUG</span><span class="o">=</span>INFO<span class="w">  </span><span class="c1"># comment it if you are not debugging distributed parallel setup</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_DEBUG_SUBSYS</span><span class="o">=</span>ALL<span class="w"> </span><span class="c1"># comment it if you are not debugging distributed parallel setup</span>
+
+<span class="c1"># find the ip-address of one of the node. Treat it as master</span>
+<span class="nv">ip1</span><span class="o">=</span><span class="sb">`</span>hostname<span class="w"> </span>-I<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+<span class="nb">echo</span><span class="w"> </span><span class="nv">$ip1</span>
+
+<span class="c1"># Store the master node’s IP address in the MASTER_ADDR environment variable.</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">MASTER_ADDR</span><span class="o">=</span><span class="k">$(</span>hostname<span class="k">)</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;r</span><span class="nv">$SLURM_NODEID</span><span class="s2"> master: </span><span class="nv">$MASTER_ADDR</span><span class="s2">&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;r</span><span class="nv">$SLURM_NODEID</span><span class="s2"> Launching python script&quot;</span>
+
+srun<span class="w"> </span>python<span class="w"> </span>train.py<span class="w"> </span>--nodes<span class="o">=</span><span class="m">2</span><span class="w"> </span>--ngpus<span class="w"> </span><span class="m">4</span><span class="w"> </span>--ip_adress<span class="w"> </span><span class="nv">$ip1</span><span class="w"> </span>--epochs<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">To Narvi users</p>
+<p>Change the ip1=<code>hostname -I | awk '{print $2}'</code> line to ip1=<code>hostname -I | awk '{print $1}'</code> to correctly parse the ip address.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">To Mahti users</p>
+<p>For now add <code>export NCCL_IB_DISABLE=1</code> to the batch script to prevent the occasional hang in the training loop. However, I am not sure whether this is happening becasue of Mahti or Pytorch 1.8.</p>
+</div>
+<h2 id="tips-and-tricks">Tips and Tricks</h2>
+<ul>
+<li>If you have <code>os.mkdir</code> inside the script then always wrap it with <code>try and except</code>. Multiple processes will try to create a new folder and they will throw errors that the directory already exists.</li>
+<li>When resuming the network weights if your model complains that the tensors are not on the same advice and points to the optimiser then it is mostly caused by this <a href="https://github.com/pytorch/pytorch/issues/2830">optimizer-error</a>. Just add these few lines after loading the optimizer from the checkpoints.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpus</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>To run on a single node with multiple gpus, just make the <code>--nodes=1</code> in the batch script.</li>
+<li>If you Batchnorm*d inside the network then you may consider replacing them with <code>sync-batchnorm</code> to have better batch statistics while using DistributedDataParallel.</li>
+<li>Use this feature when it is required to optimise the gpu usage.</li>
+</ul>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>I found this <a href="https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html">article</a> really helpful when I was setting up my DistributedDataParallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things. If you have any suggestions then reach me at <code>soumya.tripathy@tuni.fi</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

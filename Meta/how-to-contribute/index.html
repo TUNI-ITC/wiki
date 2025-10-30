@@ -1,0 +1,1087 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../../Technical-Notes/Distributed_dataparallel_pytorch/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>How to Contribute to This Wiki? - Tampere University ITC Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-contribute-to-this-wiki" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-header__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tampere University ITC Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to Contribute to This Wiki?
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-nav__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Tampere University ITC Wiki
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Meta
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meta
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    How to Contribute to This Wiki?
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Contribute to This Wiki?
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-should-i-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Should I Do?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What Should I Do?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Create an Issue
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-fork-clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Fork &amp; Clone
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-addchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add/Change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-push-to-the-changes-to-the-fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Push to the Changes to the Fork
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-create-a-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Create a Pull Request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Technical Notes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/Distributed_dataparallel_pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/automatically-submit-your-job-to-puhti-or-mahti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    An automation script to run your job to Puhti or Mahti
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/custom_LUMI_python_envs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/how-to-set-up-remote-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Set up Remote Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/install-tuni-vpn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install TUNI VPN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/sauna-machines-tips-and-tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Best Practices, Tips and Tricks for SAUNA Machines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/tuni-tcsc-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TUNI TCSC Cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/version_control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Version Control
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Technical-Notes/wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Wireless connections
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    University Bureaucracy
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            University Bureaucracy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/cs_curricula/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Computing Sciences Curricula
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/employee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Make a work contract request
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/msc_thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MSc Thesis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/phd_thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PhD Thesis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    X Outdated
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            X Outdated
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../X-Outdated/tuni-narvi-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TUNI Narvi Cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-should-i-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      What Should I Do?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What Should I Do?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Create an Issue
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-fork-clone" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Fork &amp; Clone
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-addchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add/Change
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-push-to-the-changes-to-the-fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Push to the Changes to the Fork
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-create-a-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Create a Pull Request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="how-to-contribute-to-this-wiki">How to Contribute to This Wiki?</h1>
+<!-- This wiki is backed up with the source of from [TUNI-ITC/wiki](https://github.com/TUNI-ITC/wiki). The knowledge is expected to be contributed via Markdown files (`.md`). While the style of the pages and website overall depends on [Material Theme](https://squidfunk.github.io/) for [MkDocs](https://www.mkdocs.org/). -->
+<p>This Wiki 📖 is a crowdsourced base of knowledge accumulated by generations of current and ex research assistants, students, faculty members, friends, and other personnel. It is "whatever" annoying you don't remember after two months anymore or what frequently someone asks.</p>
+<p>The knowledge is expected to be contributed via Markdown files (<code>.md</code>) and submitted as Pull Requests to <a href="https://github.com/TUNI-ITC/wiki">TUNI-ITC/wiki</a>. This guide describes this process step-by-step.</p>
+<p>There are two options on how to contribute to Wiki:</p>
+<ol>
+<li>Do-it-yourself 👍: you are following this guide and submitting the Pull Request.</li>
+<li>Ask somebody: for instance, you are not familiar with <code>git</code> and don't want to discover its beauty, then, create an Issue in <a href="https://github.com/TUNI-ITC/wiki">TUNI-ITC/wiki</a> and share a <code>.md</code> file with us. Here are the <a href="https://guides.github.com/features/mastering-markdown/">guide</a> and <a href="https://stackedit.io/">an online Markdown editor</a>.</li>
+</ol>
+<div class="admonition question">
+<p class="admonition-title">What Can I Contribute?</p>
+<p>Anything! Style, spelling, new knowledge, Wiki's engine. Anything, ok? 🤗</p>
+</div>
+<h2 id="what-should-i-do">What Should I Do?</h2>
+<details class="warning">
+<summary>I already have an old fork on my GitHub</summary>
+<p>A good pratice is to have an even (up-to-date) fork with the upstream repo (<code>TUNI-ITC/wiki</code>) before you form a pull request. Otherwise, you may purpose an edit to the old content that is no longer there.</p>
+<p>Of course, the easiest way to sync a fork (and the last resort measure if something went wrong) is to delete the fork from your GitHub account and fork <a href="https://github.com/TUNI-ITC/wiki">TUNI-ITC/wiki</a> again. A less barbaric approach is to sync it. Here is how to do it.</p>
+<p>If you already made some new contributions, make sure to backup them to avoid issues. You may also want to remove the fork from your local machine and clone the fork again from your profile on GitHub.</p>
+<p>Synchronizing a fork is a simple procedure but requires you to run several lines in your terminal:
+<div class="highlight"><pre><span></span><code><span class="c1"># (this line is for the first time only) Add the upsteam to your git folder.</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/TUNI-ITC/wiki.git
+git<span class="w"> </span>fetch<span class="w"> </span>upstream
+git<span class="w"> </span>checkout<span class="w"> </span>main
+<span class="c1"># WARNING: this erases all differences between upstream and your local version</span>
+git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>upstream/main
+<span class="c1"># pushes the changes to your fork on GitHub</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main<span class="w"> </span>--force
+</code></pre></div></p>
+</details>
+<p>The pipeline boils down to these several steps which should be familiar to anyone who worked with an open-source project on some sort of Hub 🤓 (GitHub, Bitbucket, GitLab, and such):</p>
+<ol>
+<li>Create an Issue <em>(skip if feeling lazy or playing like a bad boy)</em></li>
+<li>Fork &amp; Clone</li>
+<li>Add/Change</li>
+<li>Push to the Fork</li>
+<li>Create a Pull Request</li>
+</ol>
+<h3 id="1-create-an-issue">1. Create an Issue</h3>
+<p>This is completely optional and we would like to see an issue just to track the progress and maybe suggest where (which section) to put your knowledge or help you with something.</p>
+<h3 id="2-fork-clone">2. Fork &amp; Clone</h3>
+<p>You can edit directly through the GitHub web page ("Add File" and "Edit" button) or do it locally on your computer. We recommend learning to do it the hard way by forking and cloning it manually you will benefit from this knowledge in your career, otherwise skip this step.</p>
+<p>Fork means that you make a personal copy of this wiki - note that anyone can do that and it does not mess the main branch! To do that go to <a href="https://github.com/TUNI-ITC/wiki">TUNI-ITC/wiki</a> and press the top-right button <em>Fork</em> - if you don't have a Github account yet, you need to make one.</p>
+<p>After that, you should have the forked repo somewhere in your account, e.g., <code>github.com/&lt;MY_ACCOUNT&gt;/wiki/</code>.</p>
+<p>To clone your fork locally, in terminal type:
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;MY_ACCOUNT&gt;/wiki/
+</code></pre></div>
+and it's done!</p>
+<h3 id="3-addchange">3. Add/Change</h3>
+<p>You may freely edit an existing file or create new, e.g., <code>how-to-select-a-coffee-in-a-finnish-supermarket.md</code>. Here are the <a href="https://guides.github.com/features/mastering-markdown/">guide</a> and <a href="https://stackedit.io/">an online Markdown editor</a> for you to play with.</p>
+<p>We are using <a href="https://squidfunk.github.io/">Material Theme</a> for <a href="https://www.mkdocs.org/">MkDocs</a>. Hence, you may also propose to add more functionality to our wiki. Check out the manuals of both to see what else we can add.</p>
+<details class="question">
+<summary>Can I check locally how it will look?</summary>
+<p>Sure thing! You will only need to install the <code>mkdocs-material</code> python package using either
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material
+</code></pre></div>
+or (Ubuntu preferred)
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>mkdocs-material
+</code></pre></div>
+Once done, you can start a preview server locally
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/wiki
+mkdocs<span class="w"> </span>serve
+</code></pre></div>
+After, just type <code>localhost:8000</code> in your browser.</p>
+<p>See more <a href="https://squidfunk.github.io/mkdocs-material/creating-your-site/">in the original documentation</a>.</p>
+</details>
+<h3 id="4-push-to-the-changes-to-the-fork">4. Push to the Changes to the Fork</h3>
+<p>Commit your changes! You know how, right?</p>
+<details class="info">
+<summary>Ok, here is how</summary>
+<div class="highlight"><pre><span></span><code><span class="c1"># it will print the modifications were made compared to last commit</span>
+git<span class="w"> </span>status
+<span class="c1"># this will `stage` you changes</span>
+git<span class="w"> </span>add<span class="w"> </span>how-to-do-something.md
+<span class="c1"># this will commit the staged changes</span>
+<span class="c1"># (it may ask you to configure git if you are doing to for the first time)</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;added how-to-do-something.md&quot;</span>
+git<span class="w"> </span>push
+</code></pre></div>
+</details>
+<h3 id="5-create-a-pull-request">5. Create a Pull Request</h3>
+<p>Open the page with your fork on GitHub: <code>github.com/&lt;MY_ACCOUNT&gt;/wiki/</code>. At this point, you should be able to find the changes you made in your fork. Somewhere at the top, you will be asked if you want to make a Pull Request and that your branch is ahead of the <code>main</code> by some commits. Make the request, by adding comments, title, and check that you are proposing the files you expect and submit it. Someone will review and accept it. That's it!</p>
+<p><strong>Note, once the PR is submitted it cannot be deleted even by the moderators.</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

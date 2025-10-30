@@ -1,0 +1,1163 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../automatically-submit-your-job-to-puhti-or-mahti/">
+      
+      
+        <link rel="next" href="../how-to-set-up-remote-access/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper - Tampere University ITC Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#setting-up-python-environments-on-lumi-or-why-you-shouldnt-use-the-lumi-container-wrapper" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-header__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tampere University ITC Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Tampere University ITC Wiki" class="md-nav__button md-logo" aria-label="Tampere University ITC Wiki" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Tampere University ITC Wiki
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Meta
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Meta
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Meta/how-to-contribute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Contribute to This Wiki?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Technical Notes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Notes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Distributed_dataparallel_pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automatically-submit-your-job-to-puhti-or-mahti/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    An automation script to run your job to Puhti or Mahti
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤔 Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-python-environment-with-cotainr" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔨 Building a Python environment with Cotainr
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-jobs-with-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Running jobs with the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contact
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-set-up-remote-access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Set up Remote Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install-tuni-vpn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install TUNI VPN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sauna-machines-tips-and-tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Best Practices, Tips and Tricks for SAUNA Machines
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tuni-tcsc-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TUNI TCSC Cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../version_control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Version Control
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wifi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Wireless connections
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    University Bureaucracy
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            University Bureaucracy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/cs_curricula/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Computing Sciences Curricula
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/employee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Make a work contract request
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/msc_thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MSc Thesis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../University-Bureaucracy/phd_thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PhD Thesis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    X Outdated
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            X Outdated
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../X-Outdated/tuni-narvi-cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TUNI Narvi Cluster
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      📖 Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤔 Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-python-environment-with-cotainr" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔨 Building a Python environment with Cotainr
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-jobs-with-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Running jobs with the environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contact" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contact
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="setting-up-python-environments-on-lumi-or-why-you-shouldnt-use-the-lumi-container-wrapper">Setting up Python environments on LUMI: Or why you shouldn't use the LUMI container wrapper</h1>
+<p>This guide provides instructions on how to create custom Python environments on the <a href="https://www.lumi-supercomputer.eu/lumi_supercomputer/">EuroHPC LUMI supercomputer</a> in a way that ensures inter-node communication works properly. This is essential for running multi-node machine learning jobs on LUMI using e.g. PyTorch, TensorFlow, and JAX.</p>
+<p>All the information provided here is also available in LUMI official documentation, but as the information is scattered across multiple pages, it can be difficult to find the relevant details. This guide aims to consolidate that information and provide a clear, step-by-step process for setting up your custom environment.</p>
+<p>All the scripts used in this guide are available in this <a href="https://github.com/lasuomela/LUMI-Project-Template">GitHub repository</a>, so that it can be easily tested on LUMI.</p>
+<h2 id="table-of-contents">📖 Table of Contents</h2>
+<ol>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#building-a-python-environment-with-cotainr">Building a Python environment with Cotainr</a></li>
+<li><a href="#running-jobs-with-the-environment">Running jobs with the environment</a></li>
+<li><a href="#contact">Contact</a></li>
+</ol>
+<h2 id="motivation">🤔 Motivation</h2>
+<p>Many users move to LUMI from CSC clusters like Mahti and Puhti, where it is convenient to create custom Python environments using the <a href="https://docs.csc.fi/computing/containers/tykky/">Tykky tool</a> for wrapping Conda environments in Singularity containers. </p>
+<p>A similar tool, <a href="https://docs.lumi-supercomputer.eu/software/installing/container-wrapper/">LUMI container wrapper</a>, is also available on LUMI and is tempting to use because of the familiar workflow. However, using the container wrapper on LUMI has significant drawbacks, especially for multi-node training jobs. Let's consider an example of training a PyTorch model using Distributed Data Parallel (DDP) across two nodes. Here are the epoch durations with environments created in two different ways:</p>
+<p><div class="highlight"><pre><span></span><code><span class="c1"># With an environment created with LUMI container wrapper</span>
+Epoch<span class="w"> </span><span class="m">1</span>:<span class="w"> </span><span class="m">100</span>%<span class="p">|</span>██████████<span class="p">|</span><span class="w"> </span><span class="m">2442</span>/2442<span class="w"> </span><span class="o">[</span><span class="m">06</span>:20&lt;<span class="m">00</span>:00,<span class="w">  </span><span class="m">6</span>.42it/s<span class="o">]</span>
+
+<span class="c1"># With an environment created following this guide</span>
+Epoch<span class="w"> </span><span class="m">0</span>:<span class="w"> </span><span class="m">100</span>%<span class="p">|</span>██████████<span class="p">|</span><span class="w"> </span><span class="m">2442</span>/2442<span class="w"> </span><span class="o">[</span><span class="m">00</span>:49&lt;<span class="m">00</span>:00,<span class="w"> </span><span class="m">49</span>.25it/s<span class="o">]</span>
+</code></pre></div>
+As you can see, the run with the LUMI container wrapper environment is ~7x slower! But why?</p>
+<p>The reason is that fast node-to-node communication on LUMI requires the AWS OFI plugin for RCCL, which is the AMD GPU collective communication library, replacement for NVIDIA NCCL. The plugin enables RCCL to use LUMI's Slingshot-11 interconnect, as RCCL does not support it out of the box. LUMI container wrapper installs start from a minimal base image that does not include the AWS OFI plugin. While it is possible to manually inject the plugin, it is easier to build Python environments on top of pre-configured ROCm images that already include it. This can be achieved using the <a href="https://docs.lumi-supercomputer.eu/software/containers/singularity/#building-containers-using-the-cotainr-tool">Cotainr tool</a> available on LUMI.</p>
+<h2 id="building-a-python-environment-with-cotainr">🔨 Building a Python environment with Cotainr</h2>
+<p>To build the example environment on LUMI, clone the <a href="https://github.com/lasuomela/LUMI-Project-Template">example repository</a> and run the <code>create_environment.sh</code> script:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;your_LUMI_project_id&gt;
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/lasuomela/LUMI-Project-Template.git
+<span class="nb">cd</span><span class="w"> </span>LUMI-Project-Template
+
+sbatch<span class="w"> </span>-A<span class="w"> </span>&lt;your_LUMI_project_id&gt;<span class="w"> </span>slurm_tools/create_environment.sh
+</code></pre></div>
+<p>The script creates a new Singularity image with the Conda and pip packages specified in <a href="https://github.com/lasuomela/LUMI-Project-Template/blob/main/environment.yml"><code>environment.yml</code></a> on top of an ROCm base image provided by LUMI.</p>
+<p>Additionally, it creates a SquashFS file that contains a Python virtual environment (venv) with the pip packages that cannot be installed directly with Conda. An editable install of a package you are developing is a good example of such a package. The SquashFS file is mounted inside the Singularity image at runtime to make the packages available.</p>
+<p>The environment build is done on a compute node to ensure sufficient RAM and CPU. The build process takes some time, you can monitor the progress in the <code>log_build.out</code> and <code>log_build.err</code> files generated by SLURM.</p>
+<p>Here you can see the content of <code>create_environment.sh</code> for reference:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash -l</span>
+<span class="c1">#SBATCH --job-name=lumi_env_build     # Job name</span>
+<span class="c1">#SBATCH --output=logs/log_build.out      # Name of stdout output file</span>
+<span class="c1">#SBATCH --error=logs/log_build.err       # Name of stderr error file</span>
+<span class="c1">#SBATCH --partition=small               # partition name</span>
+<span class="c1">#SBATCH --nodes=1                       # Total number of nodes </span>
+<span class="c1">#SBATCH --ntasks-per-node=1             # MPI ranks per node</span>
+<span class="c1">#SBATCH --cpus-per-task=64</span>
+<span class="c1">#SBATCH --mem=256G                      # Total memory for job</span>
+<span class="c1">#SBATCH --time=0-00:20:00               # Run time (d-hh:mm:ss)</span>
+
+<span class="c1"># Reference:</span>
+<span class="c1"># https://github.com/Lumi-supercomputer/Getting_Started_with_AI_workshop/blob/main/07_Extending_containers_with_virtual_environments_for_faster_testing/examples/extending_containers_with_venv.md</span>
+
+<span class="c1"># Name of the image to create</span>
+<span class="nv">IMAGE_NAME</span><span class="o">=</span>pytorch_example.sif
+
+<span class="c1"># Path to the package being developed</span>
+<span class="nv">PKG_DIR</span><span class="o">=</span>/scratch/<span class="nv">$SLURM_JOB_ACCOUNT</span>/LUMI-Project-Template
+
+<span class="c1"># Where to store the image</span>
+<span class="nv">INSTALL_DIR</span><span class="o">=</span>/projappl/<span class="nv">$SLURM_JOB_ACCOUNT</span>/pytorch_example
+
+<span class="c1"># Path to your conda environment file</span>
+<span class="nv">ENV_FILE_PATH</span><span class="o">=</span><span class="nv">$PKG_DIR</span>/environment.yml
+
+<span class="c1"># Path to the environment base image. Choose a ROCm version that matches your needs.</span>
+<span class="c1"># On the base images, RCCL is properly configured to use the high-speed Slingshot-11 interconnect</span>
+<span class="c1"># between nodes. This ensures optimal performance when training across multiple nodes.</span>
+<span class="nv">BASE_IMAGE_PATH</span><span class="o">=</span>/appl/local/containers/sif-images/lumi-rocm-rocm-6.2.4.sif
+
+<span class="c1"># Remove the old environment</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INSTALL_DIR</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$INSTALL_DIR</span>
+<span class="k">fi</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$INSTALL_DIR</span>
+
+<span class="c1"># Purge modules and load cotainr module</span>
+module<span class="w"> </span>purge
+module<span class="w"> </span>load<span class="w"> </span>LUMI/24.03<span class="w"> </span>cotainr
+
+<span class="c1"># Install the conda/pip dependencies specified in the .yml file</span>
+srun<span class="w"> </span>cotainr<span class="w"> </span>build<span class="w"> </span><span class="nv">$INSTALL_DIR</span>/<span class="nv">$IMAGE_NAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--base-image<span class="o">=</span><span class="nv">$BASE_IMAGE_PATH</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--conda-env<span class="o">=</span><span class="nv">$ENV_FILE_PATH</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--accept-license
+
+<span class="c1"># Stuff beyond here is optional but useful</span>
+
+<span class="c1"># Load modules needed for running Singularity containers</span>
+module<span class="w"> </span>use<span class="w">  </span>/appl/local/containers/ai-modules
+module<span class="w"> </span>load<span class="w"> </span>singularity-AI-bindings
+
+<span class="c1"># Create a virtual environment to install stuff that cannot be installed via conda</span>
+<span class="c1"># such as an editable install of the package being developed</span>
+<span class="c1"># or packages you want to install with the --no-deps flag</span>
+singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$INSTALL_DIR</span>/<span class="nv">$IMAGE_NAME</span><span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">  python -m venv </span><span class="nv">$INSTALL_DIR</span><span class="s2">/myenv --system-site-packages &amp;&amp;</span>
+<span class="s2">  source </span><span class="nv">$INSTALL_DIR</span><span class="s2">/myenv/bin/activate &amp;&amp;</span>
+<span class="s2">  pip install git+https://github.com/bdaiinstitute/theia.git --no-deps &amp;&amp;</span>
+<span class="s2">  pip install -e </span><span class="nv">$PKG_DIR</span><span class="s2"> &amp;&amp;</span>
+<span class="s2">  deactivate</span>
+<span class="s2">&quot;</span>
+
+<span class="c1"># Create a SquashFS image of the virtual environment</span>
+mksquashfs<span class="w"> </span><span class="nv">$INSTALL_DIR</span>/myenv<span class="w"> </span><span class="nv">$INSTALL_DIR</span>/myenv.sqsh
+rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$INSTALL_DIR</span>/myenv
+</code></pre></div>
+<p>and the <code>environment.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># An example PyTorch environment for LUMI</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch_example</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.10</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightning&gt;=2.5.1</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># The PyTorch ROCm version here should match the ROCm version</span>
+<span class="w">    </span><span class="c1"># of the base image you chose in create_environment.sh</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--extra-index-url https://download.pytorch.org/whl/rocm6.2.4</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch==2.6.0+rocm6.2.4</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchvision==0.21.0+rocm6.2.4</span>
+</code></pre></div>
+<h2 id="running-jobs-with-the-environment">🚀 Running jobs with the environment</h2>
+<p>Once the environment is built, you can run the example PyTorch job like
+<div class="highlight"><pre><span></span><code>sbatch<span class="w"> </span>-A<span class="w"> </span>&lt;your_LUMI_project_id&gt;<span class="w"> </span>slurm_tools/run.sh
+</code></pre></div></p>
+<p>You can change the number of GPUs and nodes in the <code>run.sh</code> script. If everything is set up correctly, you should see fast epoch times similar to the ones shown in the Motivation section, and the epoch times should decrease ~linearly as you increase the number of nodes used for training.</p>
+<p>Here is the content of <code>run.sh</code> for reference:
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash -l</span>
+<span class="c1">#SBATCH --job-name=pytorch_example     # Job name</span>
+<span class="c1">#SBATCH --output=logs/log_test.out      # Name of stdout output file</span>
+<span class="c1">#SBATCH --error=logs/log_test.err       # Name of stderr error file</span>
+<span class="c1">#SBATCH --partition=dev-g               # partition name</span>
+<span class="c1">#SBATCH --nodes=2                       # Total number of nodes </span>
+<span class="c1">#SBATCH --ntasks-per-node=1             # MPI ranks per node</span>
+<span class="c1">#SBATCH --gpus-per-node=1               # Allocate one gpu per MPI rank</span>
+<span class="c1">#SBATCH --cpus-per-task=7               # CPU cores per task</span>
+<span class="c1">#SBATCH --mem=480G                      # Total memory for job</span>
+<span class="c1">#SBATCH --time=0-02:00:00               # Run time (d-hh:mm:ss)</span>
+
+<span class="c1"># Reference:</span>
+<span class="c1"># https://github.com/Lumi-supercomputer/Getting_Started_with_AI_workshop/blob/main/07_Extending_containers_with_virtual_environments_for_faster_testing/examples/extending_containers_with_venv.md</span>
+
+<span class="c1"># Path to the environment. Same as INSTALL_DIR in create_environment.sh</span>
+<span class="nv">ENV_DIR</span><span class="o">=</span>/projappl/<span class="nv">$SLURM_JOB_ACCOUNT</span>/pytorch_example
+
+<span class="c1"># Name of the image to to use</span>
+<span class="nv">IMAGE_NAME</span><span class="o">=</span>pytorch_example.sif
+
+<span class="c1"># Load the required modules</span>
+module<span class="w"> </span>purge
+module<span class="w"> </span>load<span class="w"> </span>LUMI
+module<span class="w"> </span>use<span class="w">  </span>/appl/local/containers/ai-modules
+module<span class="w"> </span>load<span class="w"> </span>singularity-AI-bindings
+
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+<span class="nb">export</span><span class="w"> </span><span class="nv">SINGULARITYENV_PREPEND_PATH</span><span class="o">=</span>/user-software/bin<span class="w"> </span><span class="c1"># gives access to packages inside the container</span>
+
+<span class="c1"># Tell RCCL to use only Slingshot interfaces and GPU RDMA</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_SOCKET_IFNAME</span><span class="o">=</span>hsn0,hsn1,hsn2,hsn3
+<span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_NET_GDR_LEVEL</span><span class="o">=</span>PHB
+
+<span class="c1"># Run the training script:</span>
+<span class="c1"># We use the Singularity container from &#39;create_environment.sh&#39;</span>
+<span class="c1"># with the --bind option to mount the virtual environment in $ENV_DIR/myenv.sqsh</span>
+<span class="c1"># into the container at /user-software.</span>
+<span class="c1">#</span>
+<span class="c1"># The number of GPUs and nodes are auto-detected from the SLURM environment variables.</span>
+srun<span class="w"> </span>singularity<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>-B<span class="w"> </span><span class="nv">$ENV_DIR</span>/myenv.sqsh:/user-software:image-src<span class="o">=</span>/<span class="w"> </span><span class="nv">$ENV_DIR</span>/<span class="nv">$IMAGE_NAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>python<span class="w"> </span>-m<span class="w"> </span>pytorch_example.run<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--num_gpus<span class="o">=</span><span class="nv">$SLURM_GPUS_ON_NODE</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--num_nodes<span class="o">=</span><span class="nv">$SLURM_JOB_NUM_NODES</span><span class="w"> </span><span class="se">\</span>
+
+<span class="c1"># Bonus:</span>
+<span class="c1"># With full-node allocations, i.e. running jobs on standard-g or small-g with slurm argument `--exclusive,</span>
+<span class="c1"># it is beneficial to set the CPU bindings (see https://docs.lumi-supercomputer.eu/runjobs/scheduled-jobs/distribution-binding/#gpu-binding)</span>
+
+<span class="c1"># # Define CPU binding for optimal performance in full-node allocations</span>
+<span class="c1"># CPU_BIND=&quot;mask_cpu:fe000000000000,fe00000000000000&quot;</span>
+<span class="c1"># CPU_BIND=&quot;${CPU_BIND},fe0000,fe000000&quot;</span>
+<span class="c1"># CPU_BIND=&quot;${CPU_BIND},fe,fe00&quot;</span>
+<span class="c1"># CPU_BIND=&quot;${CPU_BIND},fe00000000,fe0000000000&quot;</span>
+
+<span class="c1"># srun --cpu-bind=$CPU_BIND singularity exec \</span>
+<span class="c1">#    -B $ENV_DIR/myenv.sqsh:/user-software:image-src=/ $ENV_DIR/$IMAGE_NAME \</span>
+<span class="c1">#     python -m pytorch_example.run \</span>
+<span class="c1">#         --num_gpus=$SLURM_GPUS_ON_NODE \</span>
+<span class="c1">#         --num_nodes=$SLURM_JOB_NUM_NODES \</span>
+</code></pre></div></p>
+<h2 id="contact">Contact</h2>
+<p>That's it! If you have any questions or run into issues, feel free to reach out to <code>lauri.a.suomela@tuni.fi</code> or open an issue in the <a href="https://github.com/lasuomela/LUMI-Project-Template/">GitHub repository</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
