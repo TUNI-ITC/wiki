@@ -1,6 +1,6 @@
 # Best Practices, Tips and Tricks for SAUNA Machines
 
-This wiki page is a collection of tips and tricks, but also best practices for using the SAUNA machines. If you have a tip or trick that you would like to share, please add it to this page. If you are looking for a way to connect to SAUNA machines, please see [the guide for setting up the remote access](./how-to-set-up-remote-access.md).
+This wiki page is a collection of tips and tricks, but also best practices for maintaining and using small scale high-performance computing HPC (SAUNA) machines. SAUNA machine is something share by a few researchers containing 1-4 good quality GPUs with a lot of memory. If you have a tip or trick that you would like to share, please add it to this page. If you are looking for a way to connect to SAUNA machines, please see [the guide for setting up the remote access](./how-to-set-up-remote-access.md).
 
 ## Storage
 

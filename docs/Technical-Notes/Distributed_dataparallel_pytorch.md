@@ -1,4 +1,4 @@
-# Distributed data parallel training using Pytorch on the multiple nodes of CSC and Narvi clusters
+# Distributed data parallel training using Pytorch on the multiple nodes of (T)CSC clusters
 
 ## Table of Contents
 
@@ -483,4 +483,4 @@ for state in optimizer.state.values():
 
 ## Acknowledgements
 
-I found this [article](https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html) really helpful when I was setting up my DistributedDataParallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things. If you have any suggestions then reach me at `soumya.tripathy@tuni.fi`.
+I found this [article](https://yangkky.github.io/2019/07/08/distributed-pytorch-tutorial.html) really helpful when I was setting up my DistributedDataParallel framework. Many missing details can be found in this article which is skipped here to focus more on the practical things.
