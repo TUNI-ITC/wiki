@@ -1,6 +1,6 @@
 # TUNI TCSC Cluster
 
-*This guide is based on similar one made for the previous TUNI cluster Narvi and can be found from X Files of this Wiki ([TUNI Narvi Cluster](../X-Outdated/tuni-narvi-cluster.md))*
+*This guide is based on similar one made for the previous TUNI cluster Narvi and can be found from X Files of this Wiki*
 
 This document describes how to use the `TUNI TCSC` computing cluster.
 
@@ -11,7 +11,7 @@ This document describes how to use the `TUNI TCSC` computing cluster.
 
 ## How to Get an Account?
 
-The user rights are granted per research team and maintained by the team leader (PI). Details about obtaining the rights is found from [TUNI Intranet](https://intra.tuni.fi/en/it-services/it-research/storing-and-processing-research-data-0/tcsc-high-performance-computing-cluster) and it can take several days.
+The user rights are granted per research team and maintained by the team leader (PI). Details about obtaining the rights is found from *TUNI Intranet* and it can take several days.
 
 Once you have the accounts ready, you can access the computing resources through a dedicated Web interface or old-fashioned using terminal with ssh. Note that outside the campus network VPN connectin can be needed.
 
